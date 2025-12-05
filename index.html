@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Market Size Tool | Fast Track</title>
+    <title>Fast Track Tools | 32 Decision-Forcing Frameworks</title>
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -18,6 +18,12 @@
         @font-face {
             font-family: 'Riforma';
             src: url('RiformaLL-Regular.otf') format('opentype');
+            font-weight: normal;
+        }
+
+        @font-face {
+            font-family: 'Monument';
+            src: url('MonumentGrotesk-Mono.otf') format('opentype');
             font-weight: normal;
         }
 
@@ -43,27 +49,13 @@
             line-height: 1.2;
         }
 
+        .monument {
+            font-family: 'Monument', monospace;
+            letter-spacing: 0.05em;
+        }
+
         .smooth {
             transition: all 0.2s ease;
-        }
-
-        .worksheet-input {
-            border: 1px solid #E0E0E0;
-            padding: 12px 16px;
-            font-family: 'Riforma', sans-serif;
-            font-size: 16px;
-            transition: border-color 0.2s ease;
-            background: #FFFFFF;
-            width: 100%;
-        }
-
-        .worksheet-input:focus {
-            outline: none;
-            border-color: #000000;
-        }
-
-        .worksheet-input::placeholder {
-            color: #9CA3AF;
         }
 
         .numbered-section {
@@ -91,6 +83,8 @@
             font-size: 16px;
             cursor: pointer;
             transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .btn-primary:hover:not(:disabled) {
@@ -115,87 +109,128 @@
             font-size: 16px;
             cursor: pointer;
             transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .btn-secondary:hover {
             background: #F8F8F8;
         }
 
-        .progress-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #E0E0E0;
-            transition: all 0.2s ease;
-        }
-
-        .progress-dot.active {
-            background: #000000;
-            transform: scale(1.3);
-        }
-
-        .progress-dot.completed {
-            background: #000000;
-        }
-
-        .result-card {
+        .tool-card {
             background: #FFFFFF;
-            border: 2px solid #000000;
+            border: 2px solid #E0E0E0;
             padding: 24px;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
-        .result-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .force-row {
-            border: 1px solid #E0E0E0;
-            transition: all 0.2s ease;
-        }
-
-        .force-row:hover {
+        .tool-card:hover {
             border-color: #000000;
-            background: #F8F8F8;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            transform: translateY(-4px);
         }
 
-        .slider {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 6px;
-            background: #E0E0E0;
-            outline: none;
+        .tool-card.live {
+            border-color: #FFD700;
+            border-width: 3px;
         }
 
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            background: #000000;
-            cursor: pointer;
-            border-radius: 50%;
+        .tool-card.live:hover {
+            box-shadow: 0 8px 24px rgba(255, 215, 0, 0.2);
         }
 
-        .slider::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            background: #000000;
-            cursor: pointer;
-            border-radius: 50%;
-            border: none;
-        }
-
-        .top-force-badge {
-            background: #000000;
-            color: #FFFFFF;
-            font-size: 12px;
+        .status-badge {
+            font-family: 'Monument', monospace;
+            font-size: 11px;
             padding: 4px 8px;
             border-radius: 2px;
             font-weight: bold;
+            letter-spacing: 0.5px;
         }
 
-        @keyframes slideIn {
+        .status-live {
+            background: #FFD700;
+            color: #000000;
+        }
+
+        .status-soon {
+            background: #E0E0E0;
+            color: #6B7280;
+        }
+
+        .status-beta {
+            background: #FFFFFF;
+            color: #000000;
+            border: 2px solid #000000;
+        }
+
+        .module-badge {
+            font-family: 'Monument', monospace;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            color: #6B7280;
+        }
+
+        .search-input {
+            border: 2px solid #E0E0E0;
+            padding: 12px 16px;
+            font-family: 'Riforma', sans-serif;
+            font-size: 16px;
+            transition: border-color 0.2s ease;
+            background: #FFFFFF;
+            width: 100%;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #000000;
+        }
+
+        .filter-select {
+            border: 2px solid #E0E0E0;
+            padding: 12px 16px;
+            font-family: 'Riforma', sans-serif;
+            font-size: 16px;
+            transition: border-color 0.2s ease;
+            background: #FFFFFF;
+            cursor: pointer;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #000000;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #E0E0E0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #000000;
+            transition: width 0.5s ease;
+        }
+
+        .stat-card {
+            background: #F8F8F8;
+            border-left: 4px solid #000000;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .header-gradient {
+            background: linear-gradient(180deg, #000000 0%, #1F2937 100%);
+        }
+
+        @keyframes fadeIn {
             from {
                 opacity: 0;
                 transform: translateY(20px);
@@ -207,12 +242,16 @@
         }
 
         .animate-in {
-            animation: slideIn 0.3s ease-out;
+            animation: fadeIn 0.4s ease-out;
         }
 
-        @media print {
-            .no-print {
-                display: none;
+        @media (max-width: 768px) {
+            .plaak {
+                font-size: 32px;
+            }
+            
+            .tool-card {
+                padding: 20px;
             }
         }
     </style>
@@ -221,742 +260,339 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
+        const { useState, useEffect } = React;
 
-        // Helper Functions
-        const formatCurrency = (value, currency = '€') => {
-            if (!value && value !== 0) return '-';
-            return `${currency} ${Math.round(value).toLocaleString('en-US')}`;
-        };
+        // All 32 Fast Track Tools Data
+        const toolsData = [
+            // MODULE 01: KNOW THYSELF
+            { id: 1, module: 1, moduleName: "KNOW THYSELF", name: "WOOP", description: "Define your dream and navigate obstacles strategically", status: "soon", link: null },
+            { id: 2, module: 1, moduleName: "KNOW THYSELF", name: "Dream Definition", description: "Crystallize your 3-year vision with brutal clarity", status: "soon", link: null },
+            { id: 3, module: 1, moduleName: "KNOW THYSELF", name: "Core Values", description: "Identify the 5 non-negotiable principles that guide decisions", status: "soon", link: null },
+            
+            // MODULE 02: TEAM
+            { id: 4, module: 2, moduleName: "TEAM", name: "Team Dynamics", description: "Assess 5 dysfunctions and create improvement plan", status: "live", link: "teamv2.html" },
+            { id: 5, module: 2, moduleName: "TEAM", name: "FIT Analysis", description: "Evaluate team member alignment with company future", status: "soon", link: null },
+            
+            // MODULE 03: THE MARKET
+            { id: 6, module: 3, moduleName: "THE MARKET", name: "Current Cash Position", description: "Calculate runway and burn rate with precision", status: "soon", link: null },
+            { id: 7, module: 3, moduleName: "THE MARKET", name: "Energy Audit", description: "Map where your time and energy actually go", status: "soon", link: null },
+            { id: 8, module: 3, moduleName: "THE MARKET", name: "Goals & Planning", description: "Set SMART goals with accountability mechanisms", status: "soon", link: null },
+            { id: 9, module: 3, moduleName: "THE MARKET", name: "Focus & Discipline", description: "Eliminate distractions, amplify impact", status: "soon", link: null },
+            { id: 10, module: 3, moduleName: "THE MARKET", name: "Performance Tracking", description: "Monitor KPIs that actually move the needle", status: "soon", link: null },
+            { id: 11, module: 3, moduleName: "THE MARKET", name: "Meeting Rhythm", description: "Design cadence that drives accountability", status: "soon", link: null },
+            { id: 12, module: 3, moduleName: "THE MARKET", name: "Market Size", description: "Calculate TAM and 3-year forecast with driving forces", status: "live", link: "market-size.html" },
+            { id: 13, module: 3, moduleName: "THE MARKET", name: "Segmentation & Target", description: "Define who you serve (and who you don't)", status: "soon", link: null },
+            { id: 14, module: 3, moduleName: "THE MARKET", name: "Deep Customer Dive", description: "Map pains, needs, and gains of your target", status: "soon", link: null },
+            { id: 15, module: 3, moduleName: "THE MARKET", name: "Value Proposition", description: "Articulate why customers choose you over alternatives", status: "soon", link: null },
+            { id: 16, module: 3, moduleName: "THE MARKET", name: "Value Prop Testing", description: "Validate assumptions before scaling", status: "soon", link: null },
+            { id: 17, module: 3, moduleName: "THE MARKET", name: "Product Development", description: "Build what customers actually want to buy", status: "soon", link: null },
+            { id: 18, module: 3, moduleName: "THE MARKET", name: "Pricing Strategy", description: "Capture value you create without leaving money on table", status: "soon", link: null },
+            { id: 19, module: 3, moduleName: "THE MARKET", name: "Brand & Marketing", description: "Create positioning that cuts through noise", status: "soon", link: null },
+            { id: 20, module: 3, moduleName: "THE MARKET", name: "Customer Service Strategy", description: "Design service that creates raving fans", status: "soon", link: null },
+            { id: 21, module: 3, moduleName: "THE MARKET", name: "Route to Market", description: "Map channels that actually reach your customer", status: "soon", link: null },
+            
+            // MODULE 04: EXECUTION
+            { id: 22, module: 4, moduleName: "EXECUTION", name: "Core Activities", description: "Identify the 5 activities that deliver your strategy", status: "beta", link: null },
+            { id: 23, module: 4, moduleName: "EXECUTION", name: "Core Processes & KPIs", description: "Define how you execute and how you measure", status: "soon", link: null },
+            { id: 24, module: 4, moduleName: "EXECUTION", name: "FIT & ABC Analysis", description: "Optimize resource allocation with surgical precision", status: "soon", link: null },
+            
+            // MODULE 05: PEOPLE
+            { id: 25, module: 5, moduleName: "PEOPLE", name: "Organizational Redesign", description: "Structure roles for maximum strategic impact", status: "soon", link: null },
+            { id: 26, module: 5, moduleName: "PEOPLE", name: "Employer Branding", description: "Attract A-players who share your values", status: "soon", link: null },
+            { id: 27, module: 5, moduleName: "PEOPLE", name: "Set Agile Teams", description: "Build autonomous, high-velocity squads", status: "soon", link: null },
+            
+            // MODULE 06: DIGITAL TRANSFORMATION
+            { id: 28, module: 6, moduleName: "DIGITAL", name: "Top 3 Decisions & Processes", description: "Identify what to automate for 10x leverage", status: "soon", link: null },
+            { id: 29, module: 6, moduleName: "DIGITAL", name: "AI & Tech Analysis", description: "Evaluate opportunities with asymmetric upside", status: "soon", link: null },
+            
+            // MODULE 07: IMPLEMENTATION
+            { id: 30, module: 7, moduleName: "IMPLEMENTATION", name: "Implementation Plan", description: "Turn strategy into executable 90-day sprints", status: "soon", link: null },
+            { id: 31, module: 7, moduleName: "IMPLEMENTATION", name: "Digital Heart", description: "Build systems that run business without you", status: "soon", link: null },
+            { id: 32, module: 7, moduleName: "IMPLEMENTATION", name: "12-Month Program Overview", description: "See the full transformation roadmap", status: "soon", link: null },
+        ];
 
-        const formatPercent = (value) => {
-            if (!value && value !== 0) return '-';
-            return `${(value * 100).toFixed(0)}%`;
-        };
+        function ToolsLandingPage() {
+            const [searchTerm, setSearchTerm] = useState('');
+            const [filterStatus, setFilterStatus] = useState('all');
+            const [filterModule, setFilterModule] = useState('all');
+            const [view, setView] = useState('grid'); // grid or list
 
-        // Main App Component
-        function MarketSizeTool() {
-            const [step, setStep] = useState(1);
-            const [marketData, setMarketData] = useState({
-                totalCustomers: '',
-                avgSpending: '',
-                purchasesPerYear: '',
-                grossMargin: ''
+            // Calculate stats
+            const totalTools = toolsData.length;
+            const liveTools = toolsData.filter(t => t.status === 'live').length;
+            const progressPercent = Math.round((liveTools / totalTools) * 100);
+
+            // Filter tools
+            const filteredTools = toolsData.filter(tool => {
+                const matchesSearch = tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                    tool.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                    tool.moduleName.toLowerCase().includes(searchTerm.toLowerCase());
+                const matchesStatus = filterStatus === 'all' || tool.status === filterStatus;
+                const matchesModule = filterModule === 'all' || tool.module === parseInt(filterModule);
+                return matchesSearch && matchesStatus && matchesModule;
             });
-            const [drivingForces, setDrivingForces] = useState([
-                { id: 1, name: '', impact: 3, probability: 3 }
-            ]);
-            const [impactData, setImpactData] = useState({});
 
-            // Calculations
-            const currentYear = new Date().getFullYear();
-            const futureYear = currentYear + 3;
-
-            const marketSize = marketData.totalCustomers && marketData.avgSpending && marketData.purchasesPerYear
-                ? marketData.totalCustomers * marketData.avgSpending * marketData.purchasesPerYear
-                : 0;
-
-            const profitPool = marketSize && marketData.grossMargin
-                ? marketSize * (marketData.grossMargin / 100)
-                : 0;
-
-            const calculateScore = (impact, probability) => (2 * impact) + probability;
-
-            const rankedForces = drivingForces
-                .filter(f => f.name.trim())
-                .map(f => ({
-                    ...f,
-                    score: calculateScore(f.impact, f.probability)
-                }))
-                .sort((a, b) => b.score - a.score);
-
-            const topForces = rankedForces.slice(0, 7);
-
-            // Future calculations
-            const calculateFuture = () => {
-                if (!marketSize) return { customers: 0, marketSize: 0, profitPool: 0, margin: 0 };
-
-                let customerMultiplier = 1;
-                let spendingMultiplier = 1;
-                let purchasesMultiplier = 1;
-                let marginChange = 0;
-
-                topForces.forEach(force => {
-                    const impact = impactData[force.id] || { customers: 0, spending: 0, purchases: 0, margin: 0 };
-                    customerMultiplier *= (1 + impact.customers / 100);
-                    spendingMultiplier *= (1 + impact.spending / 100);
-                    purchasesMultiplier *= (1 + impact.purchases / 100);
-                    marginChange += impact.margin;
-                });
-
-                const futureCustomers = Math.round(marketData.totalCustomers * customerMultiplier);
-                const futureMarketSize = marketSize * customerMultiplier * spendingMultiplier * purchasesMultiplier;
-                const futureMargin = parseFloat(marketData.grossMargin) + marginChange;
-                const futureProfitPool = futureMarketSize * (futureMargin / 100);
-
-                return {
-                    customers: futureCustomers,
-                    marketSize: futureMarketSize,
-                    profitPool: futureProfitPool,
-                    margin: futureMargin,
-                    growth: ((futureMarketSize - marketSize) / marketSize) * 100
-                };
-            };
-
-            const future = calculateFuture();
-
-            // Validation
-            const canProceedStep1 = marketData.totalCustomers > 0 && 
-                                   marketData.avgSpending > 0 && 
-                                   marketData.purchasesPerYear > 0 && 
-                                   marketData.grossMargin > 0 && 
-                                   marketData.grossMargin <= 100;
-
-            const canProceedStep2 = rankedForces.length >= 3;
+            // Group by module
+            const modules = [...new Set(toolsData.map(t => t.module))].sort();
 
             return (
                 <div className="min-h-screen bg-white">
                     {/* Header */}
-                    <header className="border-b-2 border-black py-6 px-8">
-                        <h1 className="plaak text-3xl">MARKET SIZE TOOL</h1>
-                        <p className="text-sm mt-2 text-gray-600">Calculate your Total Addressable Market and 3-year forecast</p>
-                    </header>
-
-                    {/* Progress Indicator */}
-                    <div className="border-b border-gray-200 py-6 px-8 no-print">
-                        <div className="flex items-center justify-between max-w-2xl">
-                            <div className="flex items-center gap-2">
-                                <div className={`progress-dot ${step >= 1 ? 'active' : ''} ${step > 1 ? 'completed' : ''}`}></div>
-                                <span className={`text-sm ${step === 1 ? 'font-bold' : ''}`}>Market Size</span>
-                            </div>
-                            <div className="flex-1 h-0.5 bg-gray-200 mx-4">
-                                <div className={`h-full bg-black transition-all ${step > 1 ? 'w-full' : 'w-0'}`}></div>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <div className={`progress-dot ${step >= 2 ? 'active' : ''} ${step > 2 ? 'completed' : ''}`}></div>
-                                <span className={`text-sm ${step === 2 ? 'font-bold' : ''}`}>Driving Forces</span>
-                            </div>
-                            <div className="flex-1 h-0.5 bg-gray-200 mx-4">
-                                <div className={`h-full bg-black transition-all ${step > 2 ? 'w-full' : 'w-0'}`}></div>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <div className={`progress-dot ${step >= 3 ? 'active' : ''}`}></div>
-                                <span className={`text-sm ${step === 3 ? 'font-bold' : ''}`}>Future Impact</span>
+                    <header className="header-gradient text-white py-6 px-8 sticky top-0 z-50 border-b-4 border-yellow-400">
+                        <div className="max-w-7xl mx-auto">
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <h1 className="plaak text-4xl mb-1">FAST TRACK TOOLS</h1>
+                                    <p className="monument text-xs opacity-80">[32 DECISION-FORCING FRAMEWORKS]</p>
+                                </div>
+                                <div className="flex gap-4">
+                                    <button className="btn-secondary text-sm">GURU MODE</button>
+                                    <button className="btn-primary text-sm">MY PROFILE</button>
+                                </div>
                             </div>
                         </div>
+                    </header>
+
+                    {/* Hero Stats Section */}
+                    <section className="border-b-2 border-gray-200 py-12 px-8 bg-gray-50">
+                        <div className="max-w-7xl mx-auto">
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                                <div className="stat-card">
+                                    <p className="monument text-xs mb-2 text-gray-600">[PROGRESS]</p>
+                                    <p className="plaak text-5xl mb-2">{progressPercent}%</p>
+                                    <div className="progress-bar mb-2">
+                                        <div className="progress-fill" style={{width: `${progressPercent}%`}}></div>
+                                    </div>
+                                    <p className="text-sm text-gray-600">{liveTools} of {totalTools} tools completed</p>
+                                </div>
+
+                                <div className="stat-card">
+                                    <p className="monument text-xs mb-2 text-gray-600">[LIVE TOOLS]</p>
+                                    <p className="plaak text-5xl mb-2">{liveTools}</p>
+                                    <p className="text-sm text-gray-600">Ready to use now</p>
+                                </div>
+
+                                <div className="stat-card">
+                                    <p className="monument text-xs mb-2 text-gray-600">[DECISIONS FORCED]</p>
+                                    <p className="plaak text-5xl mb-2">127</p>
+                                    <p className="text-sm text-gray-600">Strategic commitments made</p>
+                                </div>
+
+                                <div className="stat-card">
+                                    <p className="monument text-xs mb-2 text-gray-600">[FTP EARNED]</p>
+                                    <p className="plaak text-5xl mb-2">850</p>
+                                    <p className="text-sm text-gray-600">Fast Track Points</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Filters & Search */}
+                    <section className="border-b border-gray-200 py-6 px-8">
+                        <div className="max-w-7xl mx-auto">
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                <div className="md:col-span-2">
+                                    <input
+                                        type="search"
+                                        className="search-input"
+                                        placeholder="Search tools by name, description, or module..."
+                                        value={searchTerm}
+                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                    />
+                                </div>
+
+                                <div>
+                                    <select 
+                                        className="filter-select w-full"
+                                        value={filterStatus}
+                                        onChange={(e) => setFilterStatus(e.target.value)}
+                                    >
+                                        <option value="all">All Status</option>
+                                        <option value="live">Live Tools</option>
+                                        <option value="beta">Beta Tools</option>
+                                        <option value="soon">Coming Soon</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <select 
+                                        className="filter-select w-full"
+                                        value={filterModule}
+                                        onChange={(e) => setFilterModule(e.target.value)}
+                                    >
+                                        <option value="all">All Modules</option>
+                                        <option value="1">Module 01: Know Thyself</option>
+                                        <option value="2">Module 02: Team</option>
+                                        <option value="3">Module 03: The Market</option>
+                                        <option value="4">Module 04: Execution</option>
+                                        <option value="5">Module 05: People</option>
+                                        <option value="6">Module 06: Digital</option>
+                                        <option value="7">Module 07: Implementation</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div className="mt-4 flex items-center justify-between">
+                                <p className="text-sm text-gray-600">
+                                    Showing <span className="font-bold">{filteredTools.length}</span> of {totalTools} tools
+                                </p>
+                                <div className="flex gap-2">
+                                    <button 
+                                        className={`px-4 py-2 border-2 ${view === 'grid' ? 'bg-black text-white border-black' : 'bg-white text-black border-gray-300'}`}
+                                        onClick={() => setView('grid')}
+                                    >
+                                        Grid
+                                    </button>
+                                    <button 
+                                        className={`px-4 py-2 border-2 ${view === 'list' ? 'bg-black text-white border-black' : 'bg-white text-black border-gray-300'}`}
+                                        onClick={() => setView('list')}
+                                    >
+                                        List
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Tools Grid */}
+                    <section className="py-12 px-8">
+                        <div className="max-w-7xl mx-auto">
+                            {filteredTools.length === 0 ? (
+                                <div className="text-center py-20">
+                                    <p className="plaak text-3xl mb-4">NO TOOLS FOUND</p>
+                                    <p className="text-gray-600">Try adjusting your filters or search term</p>
+                                </div>
+                            ) : (
+                                <div className={view === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'}>
+                                    {filteredTools.map((tool, index) => (
+                                        <ToolCard key={tool.id} tool={tool} view={view} index={index} />
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </section>
+
+                    {/* Footer */}
+                    <footer className="border-t-2 border-black bg-gray-50 py-12 px-8">
+                        <div className="max-w-7xl mx-auto">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                <div>
+                                    <h3 className="plaak text-xl mb-4">ABOUT FAST TRACK</h3>
+                                    <p className="text-sm leading-relaxed text-gray-700">
+                                        Battle-hardened entrepreneurs who select the most ambitious individuals 
+                                        and push them beyond their limits. No grit, no growth.
+                                    </p>
+                                </div>
+                                <div>
+                                    <h3 className="plaak text-xl mb-4">SUPPORT</h3>
+                                    <ul className="space-y-2 text-sm">
+                                        <li><a href="#" className="hover:underline">Quick Start Guide</a></li>
+                                        <li><a href="#" className="hover:underline">FAQ</a></li>
+                                        <li><a href="#" className="hover:underline">Contact Guru</a></li>
+                                        <li><a href="#" className="hover:underline">Technical Support</a></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h3 className="plaak text-xl mb-4">RESOURCES</h3>
+                                    <ul className="space-y-2 text-sm">
+                                        <li><a href="#" className="hover:underline">Brand Guidelines</a></li>
+                                        <li><a href="#" className="hover:underline">Sprint Content</a></li>
+                                        <li><a href="#" className="hover:underline">Forum Presentations</a></li>
+                                        <li><a href="#" className="hover:underline">Success Stories</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div className="mt-8 pt-8 border-t border-gray-300 text-center">
+                                <p className="monument text-xs text-gray-600">
+                                    © 2025 FAST TRACK PROGRAM. ALL RIGHTS RESERVED. 
+                                    <span className="inline-block mx-2">|</span> 
+                                    BUILT FOR AMBITIOUS LEADERS WHO DIE EMPTY
+                                </p>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        }
+
+        function ToolCard({ tool, view, index }) {
+            const handleClick = () => {
+                if (tool.status === 'live' && tool.link) {
+                    window.location.href = tool.link;
+                }
+            };
+
+            if (view === 'list') {
+                return (
+                    <div 
+                        className={`tool-card ${tool.status} animate-in cursor-pointer flex flex-row items-center gap-6`}
+                        style={{animationDelay: `${index * 0.05}s`}}
+                        onClick={handleClick}
+                    >
+                        <div className="flex-shrink-0">
+                            <div className="w-16 h-16 bg-black text-white flex items-center justify-center">
+                                <span className="plaak text-2xl">{String(tool.id).padStart(2, '0')}</span>
+                            </div>
+                        </div>
+
+                        <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-2">
+                                <span className="module-badge">[MODULE {String(tool.module).padStart(2, '0')} → {tool.moduleName}]</span>
+                                <span className={`status-badge status-${tool.status}`}>
+                                    {tool.status === 'live' ? 'LIVE' : tool.status === 'beta' ? 'BETA' : 'COMING SOON'}
+                                </span>
+                            </div>
+                            <h3 className="plaak text-xl mb-2">{tool.name}</h3>
+                            <p className="text-gray-700 text-sm">{tool.description}</p>
+                        </div>
+
+                        <div className="flex-shrink-0">
+                            {tool.status === 'live' ? (
+                                <button className="btn-primary">LAUNCH →</button>
+                            ) : (
+                                <button className="btn-primary" disabled>LOCKED</button>
+                            )}
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div 
+                    className={`tool-card ${tool.status} animate-in`}
+                    style={{animationDelay: `${index * 0.05}s`}}
+                    onClick={handleClick}
+                >
+                    <div className="flex items-start justify-between mb-4">
+                        <div className="w-12 h-12 bg-black text-white flex items-center justify-center flex-shrink-0">
+                            <span className="plaak text-lg">{String(tool.id).padStart(2, '0')}</span>
+                        </div>
+                        <span className={`status-badge status-${tool.status}`}>
+                            {tool.status === 'live' ? 'LIVE' : tool.status === 'beta' ? 'BETA' : 'SOON'}
+                        </span>
                     </div>
 
-                    {/* Main Content */}
-                    <div className="flex">
-                        {/* Step 1: Market Size */}
-                        {step === 1 && <Step1 
-                            marketData={marketData}
-                            setMarketData={setMarketData}
-                            marketSize={marketSize}
-                            profitPool={profitPool}
-                            currentYear={currentYear}
-                            canProceed={canProceedStep1}
-                            onNext={() => setStep(2)}
-                        />}
+                    <div className="mb-2">
+                        <span className="module-badge">[MODULE {String(tool.module).padStart(2, '0')}]</span>
+                    </div>
 
-                        {/* Step 2: Driving Forces */}
-                        {step === 2 && <Step2
-                            drivingForces={drivingForces}
-                            setDrivingForces={setDrivingForces}
-                            rankedForces={rankedForces}
-                            topForces={topForces}
-                            canProceed={canProceedStep2}
-                            onBack={() => setStep(1)}
-                            onNext={() => setStep(3)}
-                        />}
+                    <h3 className="plaak text-2xl mb-3">{tool.name}</h3>
+                    <p className="text-gray-700 text-sm mb-6 flex-grow">{tool.description}</p>
 
-                        {/* Step 3: Future Impact */}
-                        {step === 3 && <Step3
-                            topForces={topForces}
-                            impactData={impactData}
-                            setImpactData={setImpactData}
-                            marketData={marketData}
-                            marketSize={marketSize}
-                            profitPool={profitPool}
-                            future={future}
-                            currentYear={currentYear}
-                            futureYear={futureYear}
-                            onBack={() => setStep(2)}
-                        />}
+                    <div className="mt-auto">
+                        {tool.status === 'live' ? (
+                            <button className="btn-primary w-full">LAUNCH TOOL →</button>
+                        ) : (
+                            <button className="btn-primary w-full" disabled>
+                                {tool.status === 'beta' ? 'BETA ACCESS' : 'COMING SOON'}
+                            </button>
+                        )}
                     </div>
                 </div>
             );
         }
 
-        // Step 1: Market Size Component
-        function Step1({ marketData, setMarketData, marketSize, profitPool, currentYear, canProceed, onNext }) {
-            return (
-                <>
-                    {/* Left Sidebar */}
-                    <aside className="w-80 context-box min-h-screen">
-                        <h2 className="plaak text-4xl mb-4">WHY</h2>
-                        <p className="mb-6 leading-relaxed">
-                            Setting targets precedes strategy formulation. Market size and profitability are the only viable context within which the business can set targets and develop strategies.
-                        </p>
-
-                        <h2 className="plaak text-4xl mb-4">WHAT</h2>
-                        <p className="mb-6 leading-relaxed">
-                            Determine the size of the market in terms of total size and total profit pool.
-                        </p>
-
-                        <h2 className="plaak text-4xl mb-4">HOW</h2>
-                        <ol className="space-y-2 leading-relaxed">
-                            <li>1. Define the number of customers who are potential buyers</li>
-                            <li>2. Determine how many products/services they buy per year</li>
-                            <li>3. Determine the average price they pay</li>
-                            <li>4. Multiply the above 3 variables for market size</li>
-                            <li>5. Multiply by your gross margin % for profit pool</li>
-                        </ol>
-                    </aside>
-
-                    {/* Main Content */}
-                    <main className="flex-1 p-8">
-                        <div className="max-w-4xl animate-in">
-                            <div className="numbered-section mb-8">
-                                [01] MARKET SIZE AVAILABLE
-                            </div>
-
-                            {/* Input Grid */}
-                            <div className="grid grid-cols-2 gap-6 mb-8">
-                                <div>
-                                    <label className="block font-bold mb-2">Total Number of Customers</label>
-                                    <input
-                                        type="number"
-                                        className="worksheet-input"
-                                        placeholder="e.g., 10,000"
-                                        value={marketData.totalCustomers}
-                                        onChange={(e) => setMarketData({...marketData, totalCustomers: parseFloat(e.target.value) || ''})}
-                                    />
-                                    <p className="text-sm text-gray-500 mt-1">All potential buyers in your market</p>
-                                </div>
-
-                                <div>
-                                    <label className="block font-bold mb-2">Average Spending per Customer</label>
-                                    <input
-                                        type="number"
-                                        className="worksheet-input"
-                                        placeholder="e.g., 35,000"
-                                        value={marketData.avgSpending}
-                                        onChange={(e) => setMarketData({...marketData, avgSpending: parseFloat(e.target.value) || ''})}
-                                    />
-                                    <p className="text-sm text-gray-500 mt-1">Average price per product/service (€)</p>
-                                </div>
-
-                                <div>
-                                    <label className="block font-bold mb-2">Average Purchases per Year</label>
-                                    <input
-                                        type="number"
-                                        className="worksheet-input"
-                                        placeholder="e.g., 1"
-                                        value={marketData.purchasesPerYear}
-                                        onChange={(e) => setMarketData({...marketData, purchasesPerYear: parseFloat(e.target.value) || ''})}
-                                    />
-                                    <p className="text-sm text-gray-500 mt-1">Purchase frequency per customer</p>
-                                </div>
-
-                                <div>
-                                    <label className="block font-bold mb-2">Gross Profit Margin (%)</label>
-                                    <input
-                                        type="number"
-                                        className="worksheet-input"
-                                        placeholder="e.g., 15"
-                                        value={marketData.grossMargin}
-                                        onChange={(e) => setMarketData({...marketData, grossMargin: parseFloat(e.target.value) || ''})}
-                                    />
-                                    <p className="text-sm text-gray-500 mt-1">Your company's gross margin (0-100)</p>
-                                </div>
-                            </div>
-
-                            {/* Results */}
-                            {marketSize > 0 && (
-                                <div className="grid grid-cols-2 gap-6 mb-8 animate-in">
-                                    <div className="result-card">
-                                        <div className="text-sm text-gray-600 mb-2">Market Size ({currentYear})</div>
-                                        <div className="plaak text-4xl">{formatCurrency(marketSize)}</div>
-                                    </div>
-
-                                    <div className="result-card">
-                                        <div className="text-sm text-gray-600 mb-2">Profit Pool ({currentYear})</div>
-                                        <div className="plaak text-4xl">{formatCurrency(profitPool)}</div>
-                                    </div>
-                                </div>
-                            )}
-
-                            {/* Validation Message */}
-                            {!canProceed && Object.values(marketData).some(v => v) && (
-                                <div className="bg-gray-100 border-l-4 border-black p-4 mb-6">
-                                    <p className="font-bold">⚠️ Complete all fields to continue</p>
-                                    <p className="text-sm text-gray-600 mt-1">All inputs must be filled and margin must be between 0-100%</p>
-                                </div>
-                            )}
-
-                            {/* Navigation */}
-                            <div className="flex justify-end">
-                                <button 
-                                    className="btn-primary"
-                                    disabled={!canProceed}
-                                    onClick={onNext}
-                                >
-                                    Next: Driving Forces →
-                                </button>
-                            </div>
-                        </div>
-                    </main>
-                </>
-            );
-        }
-
-        // Step 2: Driving Forces Component
-        function Step2({ drivingForces, setDrivingForces, rankedForces, topForces, canProceed, onBack, onNext }) {
-            const addForce = () => {
-                const newId = Math.max(...drivingForces.map(f => f.id), 0) + 1;
-                setDrivingForces([...drivingForces, { id: newId, name: '', impact: 3, probability: 3 }]);
-            };
-
-            const updateForce = (id, field, value) => {
-                setDrivingForces(drivingForces.map(f => 
-                    f.id === id ? { ...f, [field]: value } : f
-                ));
-            };
-
-            const removeForce = (id) => {
-                if (drivingForces.length > 1) {
-                    setDrivingForces(drivingForces.filter(f => f.id !== id));
-                }
-            };
-
-            return (
-                <>
-                    {/* Left Sidebar */}
-                    <aside className="w-80 context-box min-h-screen">
-                        <h2 className="plaak text-4xl mb-4">WHY</h2>
-                        <p className="mb-6 leading-relaxed">
-                            The ability to predict the future is the ability to understand the driving forces. This tool helps you determine what forces will impact your industry over the next 3 years.
-                        </p>
-
-                        <h2 className="plaak text-4xl mb-4">WHAT</h2>
-                        <p className="mb-6 leading-relaxed">
-                            Identify and describe the main driving forces today that will determine changes in your industry in the next 3 years.
-                        </p>
-
-                        <h2 className="plaak text-4xl mb-4">HOW</h2>
-                        <ol className="space-y-2 leading-relaxed mb-6">
-                            <li>1. Create a list of visible driving forces</li>
-                            <li>2. Evaluate impact (1-5): 1=very low, 5=very high</li>
-                            <li>3. Evaluate probability (1-5): 1=very low, 5=very high</li>
-                        </ol>
-
-                        <div className="bg-white border-l-4 border-black p-4">
-                            <p className="font-bold mb-2">MISTAKES TO AVOID</p>
-                            <ul className="text-sm space-y-1">
-                                <li>• Missing top 3-5 high-impact forces</li>
-                                <li>• Not understanding industry impact</li>
-                                <li>• Ignoring blind spots</li>
-                                <li>• Underestimating technology speed</li>
-                            </ul>
-                        </div>
-                    </aside>
-
-                    {/* Main Content */}
-                    <main className="flex-1 p-8">
-                        <div className="max-w-6xl animate-in">
-                            <div className="numbered-section mb-8">
-                                [02] DRIVING FORCES BRAINSTORM
-                            </div>
-
-                            <div className="grid grid-cols-3 gap-8">
-                                {/* Input Area */}
-                                <div className="col-span-2">
-                                    <div className="flex justify-between items-center mb-4">
-                                        <h3 className="plaak text-xl">List Your Driving Forces</h3>
-                                        <button 
-                                            className="btn-secondary text-sm"
-                                            onClick={addForce}
-                                        >
-                                            + Add Force
-                                        </button>
-                                    </div>
-
-                                    <div className="space-y-4">
-                                        {drivingForces.map((force, index) => (
-                                            <div key={force.id} className="force-row p-4 rounded">
-                                                <div className="flex gap-4 items-start">
-                                                    <div className="flex-shrink-0 w-8 h-8 bg-black text-white rounded-full flex items-center justify-center font-bold">
-                                                        {index + 1}
-                                                    </div>
-                                                    
-                                                    <div className="flex-1 space-y-3">
-                                                        <input
-                                                            type="text"
-                                                            className="worksheet-input"
-                                                            placeholder="e.g., AI automation, new regulations, market consolidation..."
-                                                            value={force.name}
-                                                            onChange={(e) => updateForce(force.id, 'name', e.target.value)}
-                                                        />
-
-                                                        <div className="grid grid-cols-2 gap-4">
-                                                            <div>
-                                                                <label className="block text-sm font-bold mb-2">
-                                                                    Impact: {force.impact}
-                                                                </label>
-                                                                <input
-                                                                    type="range"
-                                                                    min="1"
-                                                                    max="5"
-                                                                    className="slider"
-                                                                    value={force.impact}
-                                                                    onChange={(e) => updateForce(force.id, 'impact', parseInt(e.target.value))}
-                                                                />
-                                                                <div className="flex justify-between text-xs text-gray-500 mt-1">
-                                                                    <span>Low</span>
-                                                                    <span>High</span>
-                                                                </div>
-                                                            </div>
-
-                                                            <div>
-                                                                <label className="block text-sm font-bold mb-2">
-                                                                    Probability: {force.probability}
-                                                                </label>
-                                                                <input
-                                                                    type="range"
-                                                                    min="1"
-                                                                    max="5"
-                                                                    className="slider"
-                                                                    value={force.probability}
-                                                                    onChange={(e) => updateForce(force.id, 'probability', parseInt(e.target.value))}
-                                                                />
-                                                                <div className="flex justify-between text-xs text-gray-500 mt-1">
-                                                                    <span>Low</span>
-                                                                    <span>High</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        {force.name && (
-                                                            <div className="text-sm">
-                                                                <span className="font-bold">Score: </span>
-                                                                <span className="plaak text-lg">{calculateScore(force.impact, force.probability)}</span>
-                                                                <span className="text-gray-500 ml-2">(2 × {force.impact}) + {force.probability}</span>
-                                                            </div>
-                                                        )}
-                                                    </div>
-
-                                                    {drivingForces.length > 1 && (
-                                                        <button
-                                                            onClick={() => removeForce(force.id)}
-                                                            className="text-gray-400 hover:text-black text-xl"
-                                                        >
-                                                            ×
-                                                        </button>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                {/* Top Forces Panel */}
-                                <div>
-                                    <h3 className="plaak text-xl mb-4">Top Forces</h3>
-                                    {rankedForces.length > 0 ? (
-                                        <div className="space-y-2">
-                                            {rankedForces.slice(0, 10).map((force, index) => (
-                                                <div 
-                                                    key={force.id} 
-                                                    className={`p-3 border-2 ${index < 7 ? 'border-black bg-gray-50' : 'border-gray-200'} rounded`}
-                                                >
-                                                    <div className="flex items-start gap-2">
-                                                        <span className="plaak text-lg">#{index + 1}</span>
-                                                        <div className="flex-1">
-                                                            <p className="font-bold text-sm leading-tight">{force.name}</p>
-                                                            <div className="flex gap-2 mt-1">
-                                                                <span className="text-xs text-gray-600">Score: {force.score}</span>
-                                                                {index < 7 && (
-                                                                    <span className="top-force-badge">FOCUS</span>
-                                                                )}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    ) : (
-                                        <div className="text-center text-gray-400 py-8">
-                                            <p>Start adding driving forces to see rankings</p>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-
-                            {/* Validation */}
-                            {!canProceed && (
-                                <div className="bg-gray-100 border-l-4 border-black p-4 my-6">
-                                    <p className="font-bold">⚠️ Add at least 3 driving forces to continue</p>
-                                    <p className="text-sm text-gray-600 mt-1">Quality forces lead to quality forecasts</p>
-                                </div>
-                            )}
-
-                            {/* Navigation */}
-                            <div className="flex justify-between mt-8">
-                                <button className="btn-secondary" onClick={onBack}>
-                                    ← Back
-                                </button>
-                                <button 
-                                    className="btn-primary"
-                                    disabled={!canProceed}
-                                    onClick={onNext}
-                                >
-                                    Next: Impact Analysis →
-                                </button>
-                            </div>
-                        </div>
-                    </main>
-                </>
-            );
-        }
-
-        // Step 3: Future Impact Component
-        function Step3({ topForces, impactData, setImpactData, marketData, marketSize, profitPool, future, currentYear, futureYear, onBack }) {
-            const updateImpact = (forceId, field, value) => {
-                setImpactData({
-                    ...impactData,
-                    [forceId]: {
-                        ...(impactData[forceId] || { customers: 0, spending: 0, purchases: 0, margin: 0 }),
-                        [field]: parseFloat(value) || 0
-                    }
-                });
-            };
-
-            const getTotalChange = (field) => {
-                return topForces.reduce((sum, force) => {
-                    const impact = impactData[force.id];
-                    return sum + (impact ? impact[field] : 0);
-                }, 0);
-            };
-
-            return (
-                <>
-                    {/* Left Sidebar */}
-                    <aside className="w-80 context-box min-h-screen">
-                        <h2 className="plaak text-4xl mb-4">WHY</h2>
-                        <p className="mb-6 leading-relaxed">
-                            We are creating a strategy not for today, but for the next 3 years. Understanding future impact is critical.
-                        </p>
-
-                        <h2 className="plaak text-4xl mb-4">WHAT</h2>
-                        <p className="mb-6 leading-relaxed">
-                            Understand how the market will change by estimating the effect of driving forces on: customers, spending, purchases, and gross margin.
-                        </p>
-
-                        <h2 className="plaak text-4xl mb-4">HOW</h2>
-                        <p className="leading-relaxed">
-                            Insert the % amount (positive or negative) that each driving force will change the four pillars. Changes compound multiplicatively.
-                        </p>
-                    </aside>
-
-                    {/* Main Content */}
-                    <main className="flex-1 p-8">
-                        <div className="max-w-6xl animate-in">
-                            <div className="numbered-section mb-8">
-                                [03] DRIVING FORCES IMPACT
-                            </div>
-
-                            {/* Impact Matrix */}
-                            <div className="mb-8">
-                                <div className="overflow-x-auto">
-                                    <table className="w-full border-2 border-black">
-                                        <thead>
-                                            <tr className="bg-black text-white">
-                                                <th className="p-3 text-left">Market Variable</th>
-                                                {topForces.map((force, idx) => (
-                                                    <th key={force.id} className="p-3 text-center text-sm">
-                                                        <div className="mb-1">Force #{idx + 1}</div>
-                                                        <div className="font-normal text-xs opacity-80">{force.name.slice(0, 20)}{force.name.length > 20 ? '...' : ''}</div>
-                                                    </th>
-                                                ))}
-                                                <th className="p-3 text-center bg-gray-800">Total Change</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {/* Customers Row */}
-                                            <tr className="border-t border-gray-300">
-                                                <td className="p-3 font-bold bg-gray-50">Total Customers</td>
-                                                {topForces.map(force => (
-                                                    <td key={force.id} className="p-2 text-center">
-                                                        <input
-                                                            type="number"
-                                                            className="worksheet-input text-center w-20"
-                                                            placeholder="0"
-                                                            value={impactData[force.id]?.customers || ''}
-                                                            onChange={(e) => updateImpact(force.id, 'customers', e.target.value)}
-                                                        />
-                                                        <div className="text-xs text-gray-500 mt-1">%</div>
-                                                    </td>
-                                                ))}
-                                                <td className="p-3 text-center font-bold bg-gray-100">
-                                                    {getTotalChange('customers').toFixed(1)}%
-                                                </td>
-                                            </tr>
-
-                                            {/* Spending Row */}
-                                            <tr className="border-t border-gray-300">
-                                                <td className="p-3 font-bold bg-gray-50">Avg Spending</td>
-                                                {topForces.map(force => (
-                                                    <td key={force.id} className="p-2 text-center">
-                                                        <input
-                                                            type="number"
-                                                            className="worksheet-input text-center w-20"
-                                                            placeholder="0"
-                                                            value={impactData[force.id]?.spending || ''}
-                                                            onChange={(e) => updateImpact(force.id, 'spending', e.target.value)}
-                                                        />
-                                                        <div className="text-xs text-gray-500 mt-1">%</div>
-                                                    </td>
-                                                ))}
-                                                <td className="p-3 text-center font-bold bg-gray-100">
-                                                    {getTotalChange('spending').toFixed(1)}%
-                                                </td>
-                                            </tr>
-
-                                            {/* Purchases Row */}
-                                            <tr className="border-t border-gray-300">
-                                                <td className="p-3 font-bold bg-gray-50">Purchases/Year</td>
-                                                {topForces.map(force => (
-                                                    <td key={force.id} className="p-2 text-center">
-                                                        <input
-                                                            type="number"
-                                                            className="worksheet-input text-center w-20"
-                                                            placeholder="0"
-                                                            value={impactData[force.id]?.purchases || ''}
-                                                            onChange={(e) => updateImpact(force.id, 'purchases', e.target.value)}
-                                                        />
-                                                        <div className="text-xs text-gray-500 mt-1">%</div>
-                                                    </td>
-                                                ))}
-                                                <td className="p-3 text-center font-bold bg-gray-100">
-                                                    {getTotalChange('purchases').toFixed(1)}%
-                                                </td>
-                                            </tr>
-
-                                            {/* Margin Row */}
-                                            <tr className="border-t border-gray-300">
-                                                <td className="p-3 font-bold bg-gray-50">Gross Margin</td>
-                                                {topForces.map(force => (
-                                                    <td key={force.id} className="p-2 text-center">
-                                                        <input
-                                                            type="number"
-                                                            className="worksheet-input text-center w-20"
-                                                            placeholder="0"
-                                                            value={impactData[force.id]?.margin || ''}
-                                                            onChange={(e) => updateImpact(force.id, 'margin', e.target.value)}
-                                                        />
-                                                        <div className="text-xs text-gray-500 mt-1">pts</div>
-                                                    </td>
-                                                ))}
-                                                <td className="p-3 text-center font-bold bg-gray-100">
-                                                    {getTotalChange('margin').toFixed(1)} pts
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                            {/* Results Dashboard */}
-                            <div className="grid grid-cols-2 gap-6 mb-8">
-                                <div className="result-card">
-                                    <div className="flex justify-between items-start mb-4">
-                                        <div>
-                                            <div className="text-sm text-gray-600">Current Market Size</div>
-                                            <div className="plaak text-3xl">{formatCurrency(marketSize)}</div>
-                                            <div className="text-sm text-gray-600 mt-1">{currentYear}</div>
-                                        </div>
-                                        <div className="text-right">
-                                            <div className="text-sm text-gray-600">Profit Pool</div>
-                                            <div className="plaak text-2xl">{formatCurrency(profitPool)}</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="result-card border-4">
-                                    <div className="flex justify-between items-start mb-4">
-                                        <div>
-                                            <div className="text-sm text-gray-600">Future Market Size</div>
-                                            <div className="plaak text-3xl text-green-600">{formatCurrency(future.marketSize)}</div>
-                                            <div className="text-sm text-gray-600 mt-1">{futureYear}</div>
-                                        </div>
-                                        <div className="text-right">
-                                            <div className="text-sm text-gray-600">Profit Pool</div>
-                                            <div className="plaak text-2xl text-green-600">{formatCurrency(future.profitPool)}</div>
-                                        </div>
-                                    </div>
-                                    <div className="pt-4 border-t border-gray-300">
-                                        <div className="flex justify-between text-sm">
-                                            <span>Growth Rate</span>
-                                            <span className={`font-bold ${future.growth >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                                                {future.growth >= 0 ? '+' : ''}{future.growth.toFixed(1)}%
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Summary Stats */}
-                            <div className="bg-gray-50 border-2 border-black p-6 mb-8">
-                                <h3 className="plaak text-xl mb-4">3-YEAR FORECAST SUMMARY</h3>
-                                <div className="grid grid-cols-4 gap-4">
-                                    <div>
-                                        <div className="text-sm text-gray-600">Customers</div>
-                                        <div className="font-bold">{marketData.totalCustomers.toLocaleString()} → {future.customers.toLocaleString()}</div>
-                                    </div>
-                                    <div>
-                                        <div className="text-sm text-gray-600">Market Size</div>
-                                        <div className="font-bold">{formatCurrency(marketSize)} → {formatCurrency(future.marketSize)}</div>
-                                    </div>
-                                    <div>
-                                        <div className="text-sm text-gray-600">Profit Pool</div>
-                                        <div className="font-bold">{formatCurrency(profitPool)} → {formatCurrency(future.profitPool)}</div>
-                                    </div>
-                                    <div>
-                                        <div className="text-sm text-gray-600">Margin</div>
-                                        <div className="font-bold">{marketData.grossMargin}% → {future.margin.toFixed(1)}%</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Navigation */}
-                            <div className="flex justify-between">
-                                <button className="btn-secondary" onClick={onBack}>
-                                    ← Back
-                                </button>
-                                <div className="flex gap-4">
-                                    <button className="btn-secondary" onClick={() => window.print()}>
-                                        📄 Export PDF
-                                    </button>
-                                    <button className="btn-primary" onClick={() => alert('Share functionality would integrate with your system!')}>
-                                        Share with Team
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </main>
-                </>
-            );
-        }
-
-        // Helper function for score calculation
-        function calculateScore(impact, probability) {
-            return (2 * impact) + probability;
-        }
-
-        // Render App
-        ReactDOM.render(<MarketSizeTool />, document.getElementById('root'));
+        ReactDOM.render(<ToolsLandingPage />, document.getElementById('root'));
     </script>
 </body>
 </html>
-
