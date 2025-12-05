@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Size Tool | Fast Track</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @font-face {
+            font-family: 'Plaak';
+            src: url('Plaak3Trial-43-Bold.otf') format('opentype');
+            font-weight: bold;
+        }
+
+        @font-face {
+            font-family: 'Riforma';
+            src: url('RiformaLL-Regular.otf') format('opentype');
+            font-weight: normal;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Riforma', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 16px;
+            color: #000000;
+            background: #FFFFFF;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .plaak {
+            font-family: 'Plaak', sans-serif;
+            font-weight: bold;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+        }
+
+        .smooth {
+            transition: all 0.2s ease;
+        }
+
+        .worksheet-input {
+            border: 1px solid #E0E0E0;
+            padding: 12px 16px;
+            font-family: 'Riforma', sans-serif;
+            font-size: 16px;
+            transition: border-color 0.2s ease;
+            background: #FFFFFF;
+            width: 100%;
+        }
+
+        .worksheet-input:focus {
+            outline: none;
+            border-color: #000000;
+        }
+
+        .worksheet-input::placeholder {
+            color: #9CA3AF;
+        }
+
+        .numbered-section {
+            background: #000000;
+            color: #FFFFFF;
+            padding: 10px 16px;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            display: inline-block;
+        }
+
+        .context-box {
+            background: #F8F8F8;
+            border-left: 4px solid #000000;
+            padding: 24px;
+        }
+
+        .btn-primary {
+            background: #000000;
+            color: #FFFFFF;
+            padding: 12px 24px;
+            border: 2px solid #000000;
+            font-family: 'Riforma', sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .btn-primary:disabled {
+            background: #E0E0E0;
+            border-color: #E0E0E0;
+            color: #9CA3AF;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .btn-secondary {
+            background: #FFFFFF;
+            color: #000000;
+            padding: 12px 24px;
+            border: 2px solid #000000;
+            font-family: 'Riforma', sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #F8F8F8;
+        }
+
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #E0E0E0;
+            transition: all 0.2s ease;
+        }
+
+        .progress-dot.active {
+            background: #000000;
+            transform: scale(1.3);
+        }
+
+        .progress-dot.completed {
+            background: #000000;
+        }
+
+        .result-card {
+            background: #FFFFFF;
+            border: 2px solid #000000;
+            padding: 24px;
+            transition: all 0.2s ease;
+        }
+
+        .result-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .force-row {
+            border: 1px solid #E0E0E0;
+            transition: all 0.2s ease;
+        }
+
+        .force-row:hover {
+            border-color: #000000;
+            background: #F8F8F8;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: #E0E0E0;
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #000000;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #000000;
+            cursor: pointer;
+            border-radius: 50%;
+            border: none;
+        }
+
+        .top-force-badge {
+            background: #000000;
+            color: #FFFFFF;
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 2px;
+            font-weight: bold;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @media print {
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // Helper Functions
+        const formatCurrency = (value, currency = '€') => {
+            if (!value && value !== 0) return '-';
+            return `${currency} ${Math.round(value).toLocaleString('en-US')}`;
+        };
+
+        const formatPercent = (value) => {
+            if (!value && value !== 0) return '-';
+            return `${(value * 100).toFixed(0)}%`;
+        };
+
+        // Main App Component
+        function MarketSizeTool() {
+            const [step, setStep] = useState(1);
+            const [marketData, setMarketData] = useState({
+                totalCustomers: '',
+                avgSpending: '',
+                purchasesPerYear: '',
+                grossMargin: ''
+            });
+            const [drivingForces, setDrivingForces] = useState([
+                { id: 1, name: '', impact: 3, probability: 3 }
+            ]);
+            const [impactData, setImpactData] = useState({});
+
+            // Calculations
+            const currentYear = new Date().getFullYear();
+            const futureYear = currentYear + 3;
+
+            const marketSize = marketData.totalCustomers && marketData.avgSpending && marketData.purchasesPerYear
+                ? marketData.totalCustomers * marketData.avgSpending * marketData.purchasesPerYear
+                : 0;
+
+            const profitPool = marketSize && marketData.grossMargin
+                ? marketSize * (marketData.grossMargin / 100)
+                : 0;
+
+            const calculateScore = (impact, probability) => (2 * impact) + probability;
+
+            const rankedForces = drivingForces
+                .filter(f => f.name.trim())
+                .map(f => ({
+                    ...f,
+                    score: calculateScore(f.impact, f.probability)
+                }))
+                .sort((a, b) => b.score - a.score);
+
+            const topForces = rankedForces.slice(0, 7);
+
+            // Future calculations
+            const calculateFuture = () => {
+                if (!marketSize) return { customers: 0, marketSize: 0, profitPool: 0, margin: 0 };
+
+                let customerMultiplier = 1;
+                let spendingMultiplier = 1;
+                let purchasesMultiplier = 1;
+                let marginChange = 0;
+
+                topForces.forEach(force => {
+                    const impact = impactData[force.id] || { customers: 0, spending: 0, purchases: 0, margin: 0 };
+                    customerMultiplier *= (1 + impact.customers / 100);
+                    spendingMultiplier *= (1 + impact.spending / 100);
+                    purchasesMultiplier *= (1 + impact.purchases / 100);
+                    marginChange += impact.margin;
+                });
+
+                const futureCustomers = Math.round(marketData.totalCustomers * customerMultiplier);
+                const futureMarketSize = marketSize * customerMultiplier * spendingMultiplier * purchasesMultiplier;
+                const futureMargin = parseFloat(marketData.grossMargin) + marginChange;
+                const futureProfitPool = futureMarketSize * (futureMargin / 100);
+
+                return {
+                    customers: futureCustomers,
+                    marketSize: futureMarketSize,
+                    profitPool: futureProfitPool,
+                    margin: futureMargin,
+                    growth: ((futureMarketSize - marketSize) / marketSize) * 100
+                };
+            };
+
+            const future = calculateFuture();
+
+            // Validation
+            const canProceedStep1 = marketData.totalCustomers > 0 && 
+                                   marketData.avgSpending > 0 && 
+                                   marketData.purchasesPerYear > 0 && 
+                                   marketData.grossMargin > 0 && 
+                                   marketData.grossMargin <= 100;
+
+            const canProceedStep2 = rankedForces.length >= 3;
+
+            return (
+                <div className="min-h-screen bg-white">
+                    {/* Header */}
+                    <header className="border-b-2 border-black py-6 px-8">
+                        <h1 className="plaak text-3xl">MARKET SIZE TOOL</h1>
+                        <p className="text-sm mt-2 text-gray-600">Calculate your Total Addressable Market and 3-year forecast</p>
+                    </header>
+
+                    {/* Progress Indicator */}
+                    <div className="border-b border-gray-200 py-6 px-8 no-print">
+                        <div className="flex items-center justify-between max-w-2xl">
+                            <div className="flex items-center gap-2">
+                                <div className={`progress-dot ${step >= 1 ? 'active' : ''} ${step > 1 ? 'completed' : ''}`}></div>
+                                <span className={`text-sm ${step === 1 ? 'font-bold' : ''}`}>Market Size</span>
+                            </div>
+                            <div className="flex-1 h-0.5 bg-gray-200 mx-4">
+                                <div className={`h-full bg-black transition-all ${step > 1 ? 'w-full' : 'w-0'}`}></div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <div className={`progress-dot ${step >= 2 ? 'active' : ''} ${step > 2 ? 'completed' : ''}`}></div>
+                                <span className={`text-sm ${step === 2 ? 'font-bold' : ''}`}>Driving Forces</span>
+                            </div>
+                            <div className="flex-1 h-0.5 bg-gray-200 mx-4">
+                                <div className={`h-full bg-black transition-all ${step > 2 ? 'w-full' : 'w-0'}`}></div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <div className={`progress-dot ${step >= 3 ? 'active' : ''}`}></div>
+                                <span className={`text-sm ${step === 3 ? 'font-bold' : ''}`}>Future Impact</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Main Content */}
+                    <div className="flex">
+                        {/* Step 1: Market Size */}
+                        {step === 1 && <Step1 
+                            marketData={marketData}
+                            setMarketData={setMarketData}
+                            marketSize={marketSize}
+                            profitPool={profitPool}
+                            currentYear={currentYear}
+                            canProceed={canProceedStep1}
+                            onNext={() => setStep(2)}
+                        />}
+
+                        {/* Step 2: Driving Forces */}
+                        {step === 2 && <Step2
+                            drivingForces={drivingForces}
+                            setDrivingForces={setDrivingForces}
+                            rankedForces={rankedForces}
+                            topForces={topForces}
+                            canProceed={canProceedStep2}
+                            onBack={() => setStep(1)}
+                            onNext={() => setStep(3)}
+                        />}
+
+                        {/* Step 3: Future Impact */}
+                        {step === 3 && <Step3
+                            topForces={topForces}
+                            impactData={impactData}
+                            setImpactData={setImpactData}
+                            marketData={marketData}
+                            marketSize={marketSize}
+                            profitPool={profitPool}
+                            future={future}
+                            currentYear={currentYear}
+                            futureYear={futureYear}
+                            onBack={() => setStep(2)}
+                        />}
+                    </div>
+                </div>
+            );
+        }
+
+        // Step 1: Market Size Component
+        function Step1({ marketData, setMarketData, marketSize, profitPool, currentYear, canProceed, onNext }) {
+            return (
+                <>
+                    {/* Left Sidebar */}
+                    <aside className="w-80 context-box min-h-screen">
+                        <h2 className="plaak text-4xl mb-4">WHY</h2>
+                        <p className="mb-6 leading-relaxed">
+                            Setting targets precedes strategy formulation. Market size and profitability are the only viable context within which the business can set targets and develop strategies.
+                        </p>
+
+                        <h2 className="plaak text-4xl mb-4">WHAT</h2>
+                        <p className="mb-6 leading-relaxed">
+                            Determine the size of the market in terms of total size and total profit pool.
+                        </p>
+
+                        <h2 className="plaak text-4xl mb-4">HOW</h2>
+                        <ol className="space-y-2 leading-relaxed">
+                            <li>1. Define the number of customers who are potential buyers</li>
+                            <li>2. Determine how many products/services they buy per year</li>
+                            <li>3. Determine the average price they pay</li>
+                            <li>4. Multiply the above 3 variables for market size</li>
+                            <li>5. Multiply by your gross margin % for profit pool</li>
+                        </ol>
+                    </aside>
+
+                    {/* Main Content */}
+                    <main className="flex-1 p-8">
+                        <div className="max-w-4xl animate-in">
+                            <div className="numbered-section mb-8">
+                                [01] MARKET SIZE AVAILABLE
+                            </div>
+
+                            {/* Input Grid */}
+                            <div className="grid grid-cols-2 gap-6 mb-8">
+                                <div>
+                                    <label className="block font-bold mb-2">Total Number of Customers</label>
+                                    <input
+                                        type="number"
+                                        className="worksheet-input"
+                                        placeholder="e.g., 10,000"
+                                        value={marketData.totalCustomers}
+                                        onChange={(e) => setMarketData({...marketData, totalCustomers: parseFloat(e.target.value) || ''})}
+                                    />
+                                    <p className="text-sm text-gray-500 mt-1">All potential buyers in your market</p>
+                                </div>
+
+                                <div>
+                                    <label className="block font-bold mb-2">Average Spending per Customer</label>
+                                    <input
+                                        type="number"
+                                        className="worksheet-input"
+                                        placeholder="e.g., 35,000"
+                                        value={marketData.avgSpending}
+                                        onChange={(e) => setMarketData({...marketData, avgSpending: parseFloat(e.target.value) || ''})}
+                                    />
+                                    <p className="text-sm text-gray-500 mt-1">Average price per product/service (€)</p>
+                                </div>
+
+                                <div>
+                                    <label className="block font-bold mb-2">Average Purchases per Year</label>
+                                    <input
+                                        type="number"
+                                        className="worksheet-input"
+                                        placeholder="e.g., 1"
+                                        value={marketData.purchasesPerYear}
+                                        onChange={(e) => setMarketData({...marketData, purchasesPerYear: parseFloat(e.target.value) || ''})}
+                                    />
+                                    <p className="text-sm text-gray-500 mt-1">Purchase frequency per customer</p>
+                                </div>
+
+                                <div>
+                                    <label className="block font-bold mb-2">Gross Profit Margin (%)</label>
+                                    <input
+                                        type="number"
+                                        className="worksheet-input"
+                                        placeholder="e.g., 15"
+                                        value={marketData.grossMargin}
+                                        onChange={(e) => setMarketData({...marketData, grossMargin: parseFloat(e.target.value) || ''})}
+                                    />
+                                    <p className="text-sm text-gray-500 mt-1">Your company's gross margin (0-100)</p>
+                                </div>
+                            </div>
+
+                            {/* Results */}
+                            {marketSize > 0 && (
+                                <div className="grid grid-cols-2 gap-6 mb-8 animate-in">
+                                    <div className="result-card">
+                                        <div className="text-sm text-gray-600 mb-2">Market Size ({currentYear})</div>
+                                        <div className="plaak text-4xl">{formatCurrency(marketSize)}</div>
+                                    </div>
+
+                                    <div className="result-card">
+                                        <div className="text-sm text-gray-600 mb-2">Profit Pool ({currentYear})</div>
+                                        <div className="plaak text-4xl">{formatCurrency(profitPool)}</div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Validation Message */}
+                            {!canProceed && Object.values(marketData).some(v => v) && (
+                                <div className="bg-gray-100 border-l-4 border-black p-4 mb-6">
+                                    <p className="font-bold">⚠️ Complete all fields to continue</p>
+                                    <p className="text-sm text-gray-600 mt-1">All inputs must be filled and margin must be between 0-100%</p>
+                                </div>
+                            )}
+
+                            {/* Navigation */}
+                            <div className="flex justify-end">
+                                <button 
+                                    className="btn-primary"
+                                    disabled={!canProceed}
+                                    onClick={onNext}
+                                >
+                                    Next: Driving Forces →
+                                </button>
+                            </div>
+                        </div>
+                    </main>
+                </>
+            );
+        }
+
+        // Step 2: Driving Forces Component
+        function Step2({ drivingForces, setDrivingForces, rankedForces, topForces, canProceed, onBack, onNext }) {
+            const addForce = () => {
+                const newId = Math.max(...drivingForces.map(f => f.id), 0) + 1;
+                setDrivingForces([...drivingForces, { id: newId, name: '', impact: 3, probability: 3 }]);
+            };
+
+            const updateForce = (id, field, value) => {
+                setDrivingForces(drivingForces.map(f => 
+                    f.id === id ? { ...f, [field]: value } : f
+                ));
+            };
+
+            const removeForce = (id) => {
+                if (drivingForces.length > 1) {
+                    setDrivingForces(drivingForces.filter(f => f.id !== id));
+                }
+            };
+
+            return (
+                <>
+                    {/* Left Sidebar */}
+                    <aside className="w-80 context-box min-h-screen">
+                        <h2 className="plaak text-4xl mb-4">WHY</h2>
+                        <p className="mb-6 leading-relaxed">
+                            The ability to predict the future is the ability to understand the driving forces. This tool helps you determine what forces will impact your industry over the next 3 years.
+                        </p>
+
+                        <h2 className="plaak text-4xl mb-4">WHAT</h2>
+                        <p className="mb-6 leading-relaxed">
+                            Identify and describe the main driving forces today that will determine changes in your industry in the next 3 years.
+                        </p>
+
+                        <h2 className="plaak text-4xl mb-4">HOW</h2>
+                        <ol className="space-y-2 leading-relaxed mb-6">
+                            <li>1. Create a list of visible driving forces</li>
+                            <li>2. Evaluate impact (1-5): 1=very low, 5=very high</li>
+                            <li>3. Evaluate probability (1-5): 1=very low, 5=very high</li>
+                        </ol>
+
+                        <div className="bg-white border-l-4 border-black p-4">
+                            <p className="font-bold mb-2">MISTAKES TO AVOID</p>
+                            <ul className="text-sm space-y-1">
+                                <li>• Missing top 3-5 high-impact forces</li>
+                                <li>• Not understanding industry impact</li>
+                                <li>• Ignoring blind spots</li>
+                                <li>• Underestimating technology speed</li>
+                            </ul>
+                        </div>
+                    </aside>
+
+                    {/* Main Content */}
+                    <main className="flex-1 p-8">
+                        <div className="max-w-6xl animate-in">
+                            <div className="numbered-section mb-8">
+                                [02] DRIVING FORCES BRAINSTORM
+                            </div>
+
+                            <div className="grid grid-cols-3 gap-8">
+                                {/* Input Area */}
+                                <div className="col-span-2">
+                                    <div className="flex justify-between items-center mb-4">
+                                        <h3 className="plaak text-xl">List Your Driving Forces</h3>
+                                        <button 
+                                            className="btn-secondary text-sm"
+                                            onClick={addForce}
+                                        >
+                                            + Add Force
+                                        </button>
+                                    </div>
+
+                                    <div className="space-y-4">
+                                        {drivingForces.map((force, index) => (
+                                            <div key={force.id} className="force-row p-4 rounded">
+                                                <div className="flex gap-4 items-start">
+                                                    <div className="flex-shrink-0 w-8 h-8 bg-black text-white rounded-full flex items-center justify-center font-bold">
+                                                        {index + 1}
+                                                    </div>
+                                                    
+                                                    <div className="flex-1 space-y-3">
+                                                        <input
+                                                            type="text"
+                                                            className="worksheet-input"
+                                                            placeholder="e.g., AI automation, new regulations, market consolidation..."
+                                                            value={force.name}
+                                                            onChange={(e) => updateForce(force.id, 'name', e.target.value)}
+                                                        />
+
+                                                        <div className="grid grid-cols-2 gap-4">
+                                                            <div>
+                                                                <label className="block text-sm font-bold mb-2">
+                                                                    Impact: {force.impact}
+                                                                </label>
+                                                                <input
+                                                                    type="range"
+                                                                    min="1"
+                                                                    max="5"
+                                                                    className="slider"
+                                                                    value={force.impact}
+                                                                    onChange={(e) => updateForce(force.id, 'impact', parseInt(e.target.value))}
+                                                                />
+                                                                <div className="flex justify-between text-xs text-gray-500 mt-1">
+                                                                    <span>Low</span>
+                                                                    <span>High</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div>
+                                                                <label className="block text-sm font-bold mb-2">
+                                                                    Probability: {force.probability}
+                                                                </label>
+                                                                <input
+                                                                    type="range"
+                                                                    min="1"
+                                                                    max="5"
+                                                                    className="slider"
+                                                                    value={force.probability}
+                                                                    onChange={(e) => updateForce(force.id, 'probability', parseInt(e.target.value))}
+                                                                />
+                                                                <div className="flex justify-between text-xs text-gray-500 mt-1">
+                                                                    <span>Low</span>
+                                                                    <span>High</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        {force.name && (
+                                                            <div className="text-sm">
+                                                                <span className="font-bold">Score: </span>
+                                                                <span className="plaak text-lg">{calculateScore(force.impact, force.probability)}</span>
+                                                                <span className="text-gray-500 ml-2">(2 × {force.impact}) + {force.probability}</span>
+                                                            </div>
+                                                        )}
+                                                    </div>
+
+                                                    {drivingForces.length > 1 && (
+                                                        <button
+                                                            onClick={() => removeForce(force.id)}
+                                                            className="text-gray-400 hover:text-black text-xl"
+                                                        >
+                                                            ×
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Top Forces Panel */}
+                                <div>
+                                    <h3 className="plaak text-xl mb-4">Top Forces</h3>
+                                    {rankedForces.length > 0 ? (
+                                        <div className="space-y-2">
+                                            {rankedForces.slice(0, 10).map((force, index) => (
+                                                <div 
+                                                    key={force.id} 
+                                                    className={`p-3 border-2 ${index < 7 ? 'border-black bg-gray-50' : 'border-gray-200'} rounded`}
+                                                >
+                                                    <div className="flex items-start gap-2">
+                                                        <span className="plaak text-lg">#{index + 1}</span>
+                                                        <div className="flex-1">
+                                                            <p className="font-bold text-sm leading-tight">{force.name}</p>
+                                                            <div className="flex gap-2 mt-1">
+                                                                <span className="text-xs text-gray-600">Score: {force.score}</span>
+                                                                {index < 7 && (
+                                                                    <span className="top-force-badge">FOCUS</span>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <div className="text-center text-gray-400 py-8">
+                                            <p>Start adding driving forces to see rankings</p>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* Validation */}
+                            {!canProceed && (
+                                <div className="bg-gray-100 border-l-4 border-black p-4 my-6">
+                                    <p className="font-bold">⚠️ Add at least 3 driving forces to continue</p>
+                                    <p className="text-sm text-gray-600 mt-1">Quality forces lead to quality forecasts</p>
+                                </div>
+                            )}
+
+                            {/* Navigation */}
+                            <div className="flex justify-between mt-8">
+                                <button className="btn-secondary" onClick={onBack}>
+                                    ← Back
+                                </button>
+                                <button 
+                                    className="btn-primary"
+                                    disabled={!canProceed}
+                                    onClick={onNext}
+                                >
+                                    Next: Impact Analysis →
+                                </button>
+                            </div>
+                        </div>
+                    </main>
+                </>
+            );
+        }
+
+        // Step 3: Future Impact Component
+        function Step3({ topForces, impactData, setImpactData, marketData, marketSize, profitPool, future, currentYear, futureYear, onBack }) {
+            const updateImpact = (forceId, field, value) => {
+                setImpactData({
+                    ...impactData,
+                    [forceId]: {
+                        ...(impactData[forceId] || { customers: 0, spending: 0, purchases: 0, margin: 0 }),
+                        [field]: parseFloat(value) || 0
+                    }
+                });
+            };
+
+            const getTotalChange = (field) => {
+                return topForces.reduce((sum, force) => {
+                    const impact = impactData[force.id];
+                    return sum + (impact ? impact[field] : 0);
+                }, 0);
+            };
+
+            return (
+                <>
+                    {/* Left Sidebar */}
+                    <aside className="w-80 context-box min-h-screen">
+                        <h2 className="plaak text-4xl mb-4">WHY</h2>
+                        <p className="mb-6 leading-relaxed">
+                            We are creating a strategy not for today, but for the next 3 years. Understanding future impact is critical.
+                        </p>
+
+                        <h2 className="plaak text-4xl mb-4">WHAT</h2>
+                        <p className="mb-6 leading-relaxed">
+                            Understand how the market will change by estimating the effect of driving forces on: customers, spending, purchases, and gross margin.
+                        </p>
+
+                        <h2 className="plaak text-4xl mb-4">HOW</h2>
+                        <p className="leading-relaxed">
+                            Insert the % amount (positive or negative) that each driving force will change the four pillars. Changes compound multiplicatively.
+                        </p>
+                    </aside>
+
+                    {/* Main Content */}
+                    <main className="flex-1 p-8">
+                        <div className="max-w-6xl animate-in">
+                            <div className="numbered-section mb-8">
+                                [03] DRIVING FORCES IMPACT
+                            </div>
+
+                            {/* Impact Matrix */}
+                            <div className="mb-8">
+                                <div className="overflow-x-auto">
+                                    <table className="w-full border-2 border-black">
+                                        <thead>
+                                            <tr className="bg-black text-white">
+                                                <th className="p-3 text-left">Market Variable</th>
+                                                {topForces.map((force, idx) => (
+                                                    <th key={force.id} className="p-3 text-center text-sm">
+                                                        <div className="mb-1">Force #{idx + 1}</div>
+                                                        <div className="font-normal text-xs opacity-80">{force.name.slice(0, 20)}{force.name.length > 20 ? '...' : ''}</div>
+                                                    </th>
+                                                ))}
+                                                <th className="p-3 text-center bg-gray-800">Total Change</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {/* Customers Row */}
+                                            <tr className="border-t border-gray-300">
+                                                <td className="p-3 font-bold bg-gray-50">Total Customers</td>
+                                                {topForces.map(force => (
+                                                    <td key={force.id} className="p-2 text-center">
+                                                        <input
+                                                            type="number"
+                                                            className="worksheet-input text-center w-20"
+                                                            placeholder="0"
+                                                            value={impactData[force.id]?.customers || ''}
+                                                            onChange={(e) => updateImpact(force.id, 'customers', e.target.value)}
+                                                        />
+                                                        <div className="text-xs text-gray-500 mt-1">%</div>
+                                                    </td>
+                                                ))}
+                                                <td className="p-3 text-center font-bold bg-gray-100">
+                                                    {getTotalChange('customers').toFixed(1)}%
+                                                </td>
+                                            </tr>
+
+                                            {/* Spending Row */}
+                                            <tr className="border-t border-gray-300">
+                                                <td className="p-3 font-bold bg-gray-50">Avg Spending</td>
+                                                {topForces.map(force => (
+                                                    <td key={force.id} className="p-2 text-center">
+                                                        <input
+                                                            type="number"
+                                                            className="worksheet-input text-center w-20"
+                                                            placeholder="0"
+                                                            value={impactData[force.id]?.spending || ''}
+                                                            onChange={(e) => updateImpact(force.id, 'spending', e.target.value)}
+                                                        />
+                                                        <div className="text-xs text-gray-500 mt-1">%</div>
+                                                    </td>
+                                                ))}
+                                                <td className="p-3 text-center font-bold bg-gray-100">
+                                                    {getTotalChange('spending').toFixed(1)}%
+                                                </td>
+                                            </tr>
+
+                                            {/* Purchases Row */}
+                                            <tr className="border-t border-gray-300">
+                                                <td className="p-3 font-bold bg-gray-50">Purchases/Year</td>
+                                                {topForces.map(force => (
+                                                    <td key={force.id} className="p-2 text-center">
+                                                        <input
+                                                            type="number"
+                                                            className="worksheet-input text-center w-20"
+                                                            placeholder="0"
+                                                            value={impactData[force.id]?.purchases || ''}
+                                                            onChange={(e) => updateImpact(force.id, 'purchases', e.target.value)}
+                                                        />
+                                                        <div className="text-xs text-gray-500 mt-1">%</div>
+                                                    </td>
+                                                ))}
+                                                <td className="p-3 text-center font-bold bg-gray-100">
+                                                    {getTotalChange('purchases').toFixed(1)}%
+                                                </td>
+                                            </tr>
+
+                                            {/* Margin Row */}
+                                            <tr className="border-t border-gray-300">
+                                                <td className="p-3 font-bold bg-gray-50">Gross Margin</td>
+                                                {topForces.map(force => (
+                                                    <td key={force.id} className="p-2 text-center">
+                                                        <input
+                                                            type="number"
+                                                            className="worksheet-input text-center w-20"
+                                                            placeholder="0"
+                                                            value={impactData[force.id]?.margin || ''}
+                                                            onChange={(e) => updateImpact(force.id, 'margin', e.target.value)}
+                                                        />
+                                                        <div className="text-xs text-gray-500 mt-1">pts</div>
+                                                    </td>
+                                                ))}
+                                                <td className="p-3 text-center font-bold bg-gray-100">
+                                                    {getTotalChange('margin').toFixed(1)} pts
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            {/* Results Dashboard */}
+                            <div className="grid grid-cols-2 gap-6 mb-8">
+                                <div className="result-card">
+                                    <div className="flex justify-between items-start mb-4">
+                                        <div>
+                                            <div className="text-sm text-gray-600">Current Market Size</div>
+                                            <div className="plaak text-3xl">{formatCurrency(marketSize)}</div>
+                                            <div className="text-sm text-gray-600 mt-1">{currentYear}</div>
+                                        </div>
+                                        <div className="text-right">
+                                            <div className="text-sm text-gray-600">Profit Pool</div>
+                                            <div className="plaak text-2xl">{formatCurrency(profitPool)}</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="result-card border-4">
+                                    <div className="flex justify-between items-start mb-4">
+                                        <div>
+                                            <div className="text-sm text-gray-600">Future Market Size</div>
+                                            <div className="plaak text-3xl text-green-600">{formatCurrency(future.marketSize)}</div>
+                                            <div className="text-sm text-gray-600 mt-1">{futureYear}</div>
+                                        </div>
+                                        <div className="text-right">
+                                            <div className="text-sm text-gray-600">Profit Pool</div>
+                                            <div className="plaak text-2xl text-green-600">{formatCurrency(future.profitPool)}</div>
+                                        </div>
+                                    </div>
+                                    <div className="pt-4 border-t border-gray-300">
+                                        <div className="flex justify-between text-sm">
+                                            <span>Growth Rate</span>
+                                            <span className={`font-bold ${future.growth >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                                {future.growth >= 0 ? '+' : ''}{future.growth.toFixed(1)}%
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Summary Stats */}
+                            <div className="bg-gray-50 border-2 border-black p-6 mb-8">
+                                <h3 className="plaak text-xl mb-4">3-YEAR FORECAST SUMMARY</h3>
+                                <div className="grid grid-cols-4 gap-4">
+                                    <div>
+                                        <div className="text-sm text-gray-600">Customers</div>
+                                        <div className="font-bold">{marketData.totalCustomers.toLocaleString()} → {future.customers.toLocaleString()}</div>
+                                    </div>
+                                    <div>
+                                        <div className="text-sm text-gray-600">Market Size</div>
+                                        <div className="font-bold">{formatCurrency(marketSize)} → {formatCurrency(future.marketSize)}</div>
+                                    </div>
+                                    <div>
+                                        <div className="text-sm text-gray-600">Profit Pool</div>
+                                        <div className="font-bold">{formatCurrency(profitPool)} → {formatCurrency(future.profitPool)}</div>
+                                    </div>
+                                    <div>
+                                        <div className="text-sm text-gray-600">Margin</div>
+                                        <div className="font-bold">{marketData.grossMargin}% → {future.margin.toFixed(1)}%</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Navigation */}
+                            <div className="flex justify-between">
+                                <button className="btn-secondary" onClick={onBack}>
+                                    ← Back
+                                </button>
+                                <div className="flex gap-4">
+                                    <button className="btn-secondary" onClick={() => window.print()}>
+                                        📄 Export PDF
+                                    </button>
+                                    <button className="btn-primary" onClick={() => alert('Share functionality would integrate with your system!')}>
+                                        Share with Team
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </>
+            );
+        }
+
+        // Helper function for score calculation
+        function calculateScore(impact, probability) {
+            return (2 * impact) + probability;
+        }
+
+        // Render App
+        ReactDOM.render(<MarketSizeTool />, document.getElementById('root'));
+    </script>
+</body>
+</html>
+

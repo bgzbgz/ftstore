@@ -1,0 +1,182 @@
+I'll review both documents to understand the Core Activities tool requirements and advise on the optimal digitalization approach.Based on my review of both documents and your project knowledge, here's your strategic plan for creating the Core Activities tool:
+
+## **CORE ACTIVITIES TOOL: STRATEGIC BLUEPRINT**
+
+### **What You're Building**
+
+A **collaborative team meeting tool** (not individual prep) that forces CEOs to define their organizational structure through:
+- **5 Core Activities** (the 20% that drives 80% of results)
+- **3 Key Processes per activity** (critical execution mechanisms)
+- **3 KPIs per process** (measurable success indicators)
+
+**Critical difference from Team Tool:** This is NOT an assessment tool—it's a **definition and prioritization tool** completed live during the 90-minute team meeting.
+
+---
+
+## **THE FINAL DECISION THIS TOOL MUST FORCE**
+
+Based on the sprint content, the tool must end with:
+
+**"What are the Top 5 Core Activities that will receive 80% of our investment, focus, and talent for the next quarter?"**
+
+With public commitments:
+- Executive owner per activity
+- Resource allocation percentages
+- First 3 actions with deadlines
+- Forum presentation date
+
+---
+
+## **CRITICAL INSIGHTS FROM YOUR CONTEXT**
+
+### **What Made Team Tool 85% Successful:**
+1. ✅ One-question-at-a-time flow (Typeform style)
+2. ✅ Instant visual feedback (color coding, progress bars)
+3. ✅ Strategic Alignment Points (gamification)
+4. ✅ Submission codes for compilation
+5. ✅ Guru Mode for team synthesis
+
+### **Why Core Activities Tool Needs Different Architecture:**
+- **Collaborative NOT individual** - team works together in real-time
+- **Definition NOT assessment** - creating something new, not evaluating existing
+- **Matrix structure NOT linear flow** - need to see relationships between Activities → Processes → KPIs
+- **Live discussion support** - tool facilitates conversation, not solitary reflection
+
+---
+
+## **RECOMMENDED TOOL STRUCTURE**
+
+### **View 1: Activity Definition (Locked Sequential)**
+**Step 1:** Define Core Activities (15 min in meeting)
+- Maximum 5-7 activities allowed
+- Ghost text examples: "Rapid Fashion Design" / "Industry-Aligned Course Development"
+- Real-time specificity checker: flags vague terms like "Marketing" or "Sales"
+- **Forces decision:** Can't proceed until activities are specific and strategic
+
+**Instant Feedback:**
+- ❌ "Marketing" → "Too vague - how does this deliver your value proposition?"
+- ✅ "Digital Customer Acquisition through Content Marketing" → unlocks green checkmark
+
+### **View 2: Process Mapping (Unlocks after Activity Definition)**
+**Step 2:** Identify 3 Critical Processes per Activity (30 min in meeting)
+- Interactive table: Activities in rows, 3 process columns
+- Ghost text per cell showing process specificity
+- Dropdown constraints: force selection from categories (Production, Distribution, Quality Control, etc.)
+- **Forces decision:** Must narrow from "all processes" to "top 3 that matter most"
+
+**Instant Feedback:**
+- Process priority scoring (High/Medium/Low impact visualization)
+- Duplication detection: "This process appears under 2 activities - is that strategic?"
+
+### **View 3: KPI Assignment (Unlocks after Process Mapping)**
+**Step 3:** Establish 3 KPIs per Process (20 min in meeting)
+- Nested table structure: Activity → Process → 3 KPIs
+- KPI validation: Must include unit of measurement (%, $, days, rate)
+- Measurability checker: flags subjective KPIs
+- **Forces decision:** Clear metrics, not vague goals
+
+**Instant Feedback:**
+- KPI health dashboard: shows if KPIs are SMART (Specific, Measurable, etc.)
+- Traffic light system: Red = needs improvement, Yellow = acceptable, Green = excellent
+
+### **View 4: Strategic Alignment Dashboard (Auto-Generated)**
+**Step 4:** Visual Summary & Commitments (15 min in meeting)
+- One-page strategic map showing Activities → Processes → KPIs
+- Resource allocation visualization (80/20 principle check)
+- Executive ownership matrix
+- **Forces decision:** Public commitments with deadlines
+
+**Gamification:**
+- Strategic Alignment Points awarded for:
+  - Specificity (avoiding vague language)
+  - 80/20 focus (concentrating resources)
+  - Measurability (clear KPIs)
+  - Team alignment (low variance in priorities)
+
+### **View 5: Action Plan (Final Decision)**
+**Step 5:** 3 Priority Actions per Activity
+- What | Who | When structure
+- Public declaration space
+- Forum presentation requirement
+- Guru submission mechanism
+
+---
+
+## **THE 8 CRITERIA AUDIT**
+
+| Criterion | Score Target | Implementation Strategy |
+|-----------|--------------|-------------------------|
+| **1. Forces Decision** | 10/10 | Can't proceed without defining 5 specific activities, 3 processes each, 3 KPIs each. Final screen locks until public commitments made. |
+| **2. Requires Zero Questions** | 9/10 | Pre-filled Zara + Company X examples visible. Ghost text in every field. Real-time specificity validation. |
+| **3. Provides Easy First Steps** | 8/10 | Starts with "Name your first core activity" - single action, 30 seconds. Uses examples from their industry. |
+| **4. Delivers Instant Feedback** | 10/10 | Color-coded validation, specificity scores, 80/20 resource check, duplication detection, measurability alerts. |
+| **5. Incorporates Gamification** | 8/10 | Strategic Alignment Points for specificity, focus, measurability. Team completion milestone celebrations. |
+| **6. Crystal Clear Results** | 9/10 | One-page strategic map auto-generated. Visual dashboard with activities-processes-KPIs hierarchy. Export to PDF. |
+| **7. Enables Mass Communication** | 9/10 | Export summary, share with team, Forum presentation template, Guru compilation mode. |
+| **8. Fast Track Brand** | 10/10 | Yellow accents, Sprint badge, professional €20K aesthetic, Fast Track terminology, methodology frameworks visible. |
+
+**Projected Score: 88/100** (exceeds Team Tool's 85%)
+
+---
+
+## **CURSOR IMPLEMENTATION STRATEGY**
+
+### **Phase 1: Foundation (Day 1-2)**
+1. Read `/mnt/skills/public/frontend-design/SKILL.md` for UI best practices
+2. Create single-file React application with TypeScript
+3. Implement tab navigation (Activities → Processes → KPIs → Dashboard → Actions)
+4. Build locked progression system (can't access next view until current complete)
+
+### **Phase 2: Core Logic (Day 3-5)**
+1. Activity Definition component with specificity validation
+2. Process Mapping matrix with dropdown constraints
+3. KPI Assignment nested table with SMART validation
+4. Real-time scoring system for Strategic Alignment Points
+5. Data persistence in localStorage (no backend needed initially)
+
+### **Phase 3: Visualization (Day 6-7)**
+1. Auto-generated strategic map (Activities → Processes → KPIs hierarchy)
+2. 80/20 resource allocation visualizer
+3. Traffic light system for health indicators
+4. Export to PDF functionality
+
+### **Phase 4: Guru Mode (Day 8-9)**
+1. Team compilation interface
+2. Multi-team comparison dashboard
+3. Variance detection for misalignment
+4. Export team summary
+
+### **Phase 5: Polish (Day 10)**
+1. Fast Track branding (yellow accents, Sprint badge)
+2. Gamification animations
+3. Mobile responsiveness
+4. Performance optimization
+
+---
+
+## **KEY DIFFERENCES VS. TEAM TOOL**
+
+| Aspect | Team Tool | Core Activities Tool |
+|--------|-----------|----------------------|
+| **Completion Style** | Individual → Guru compiles | Live collaborative team session |
+| **Data Structure** | 15 statements rated 1-3 | Hierarchical: 5→15→45 (Activities→Processes→KPIs) |
+| **Primary Action** | Assessment (rating existing behavior) | Definition (creating strategic structure) |
+| **Meeting Flow** | Pre-work → Discussion | Real-time completion during meeting |
+| **Output** | Dysfunction scores + action plan | Strategic organizational structure map |
+| **Decision Forced** | Address top 3 dysfunctions | Focus 80% resources on 5 core activities |
+
+---
+
+## **IMMEDIATE NEXT STEPS**
+
+**Step 1:** Review this blueprint and confirm the structure aligns with your vision
+
+**Step 2:** I'll create the comprehensive technical specification document (like we did for Team Tool)
+
+**Step 3:** You'll use Cursor to build, following the spec with AI acceleration
+
+**Step 4:** We'll audit against the 8 criteria and iterate to 90%+ score
+
+---
+
+**Does this structure capture what you're envisioning? Should I proceed with creating the detailed technical specification, or do you want to adjust the approach first?**

@@ -1,0 +1,444 @@
+# Market Size Analysis Tool - Implementation Guide for Cursor
+
+## Context
+You have 4 markdown files that represent an Excel-based market analysis tool:
+1. `sheet_Market_size.md` - Current market size calculator
+2. `sheet_Market_Attractiveness.md` - Geographic expansion evaluator
+3. `sheet_Driving_Forces_brainstorm.md` - Future forces identification
+4. `sheet_Driving_Forces_impact.md` - 3-year market forecast
+
+This tool helps businesses calculate their Total Addressable Market (TAM) and forecast changes.
+
+---
+
+## Tool Purpose & Philosophy
+
+**Core Principle:** Use 60-70% accuracy with internal team knowledge instead of expensive research that aims for 100% accuracy.
+
+**Strategic Flow:**
+1. Calculate current market size and profit pool
+2. [Optional] Evaluate geographic expansion opportunities
+3. Identify and rank driving forces that will change the market
+4. Forecast market size 3 years into the future
+
+---
+
+## FILE 1: sheet_Market_size.md
+
+### What It Does
+Calculates the baseline market size and available profit pool TODAY.
+
+### User Inputs Needed
+The file contains 4 input fields:
+- **Total Number of Customers** - All potential buyers in the market (not just current customers)
+- **Average Spending per Customer** - Average price per product/service
+- **Average Number of Purchases per Year** - Purchase frequency
+- **Gross Profit Margin (%)** - Company's gross margin (as decimal: 0.15 = 15%)
+
+### Calculations to Implement
+
+**Market Size:**
+```
+Market Size = Total Customers × Average Spending × Purchases per Year
+```
+
+**Profit Pool:**
+```
+Profit Pool = Market Size × Gross Profit Margin
+```
+
+**Current Year Reference:**
+```
+Year = Current year (use YEAR(TODAY()) or equivalent)
+```
+
+### Example
+- 10,000 customers
+- $35,000 average spending
+- 1 purchase per year
+- 15% margin (0.15)
+
+Results:
+- Market Size: 10,000 × $35,000 × 1 = $350,000,000
+- Profit Pool: $350,000,000 × 0.15 = $52,500,000
+
+### Key Insight
+Companies often say "we don't know the market size" - but they do! Example:
+- **Consumer product (cooking oil in India):** Population × Liters consumed per person × Price per liter
+- **B2B service (software to banks):** Number of banks × Average spending per bank
+
+---
+
+## FILE 2: sheet_Market_Attractiveness.md
+
+### What It Does
+Compares multiple countries/regions using a -3 to +3 scoring system to identify best expansion opportunities.
+
+### Scoring Dimensions
+Each country gets scored on 3 factors (each -3 to +3):
+1. **Market Size Index** - How big is the market compared to baseline?
+2. **Profit Pool Index** - How profitable compared to baseline?
+3. **Country Attractiveness** - Qualitative assessment (ease of doing business, regulations, etc.)
+
+**Overall Score = Market Size Index + Profit Pool Index + Country Attractiveness**
+
+### User Inputs Needed (Per Country)
+- Population (in thousands)
+- Market Size Adjustment Factor (qualitative multiplier)
+- Profit Pool Adjustment Factor (qualitative multiplier)
+- Country Attractiveness Score (-3 to +3, user enters directly)
+
+### Baseline Inputs (Reference Country)
+- Sales per person in base country (USD)
+- Profit per person in base country (USD)
+
+### Comparison Thresholds
+Define what % of baseline equals each score:
+- **Much better (+3):** > 150% (1.5×)
+- **Better (+2):** 125-150% (1.25-1.5×)
+- **Slightly better (+1):** 100-125% (1.0-1.25×)
+- **Same (0):** 100% (1.0×)
+- **Slightly worse (-1):** 75-100% (0.75-1.0×)
+- **Worse (-2):** 50-75% (0.5-0.75×)
+- **Much worse (-3):** < 50% (< 0.5×)
+
+### Calculations to Implement
+
+**Step 1: Calculate Market Size for Each Country**
+```
+Country Market Size = Population × Market Size Adjustment × Base Sales per Person
+```
+
+**Step 2: Calculate Percentage vs Total**
+```
+Country % = (Country Market Size / Sum of All Countries) × 100%
+```
+
+**Step 3: Assign Market Size Index**
+Compare the country's percentage to thresholds and assign -3 to +3 score.
+
+**Step 4: Calculate Profit Pool for Each Country**
+```
+Country Profit Pool = Base Profit per Person × Population × Profit Adjustment
+```
+
+**Step 5: Calculate Profit Pool Percentage**
+```
+Profit % = (Country Profit Pool / Sum of All Countries) × 100%
+```
+
+**Step 6: Assign Profit Pool Index**
+Same logic as Market Size Index.
+
+**Step 7: Calculate Overall Score**
+```
+Total Score = Market Size Index + Profit Pool Index + Country Attractiveness
+```
+
+### Interpretation
+- **+6 to +9:** Extremely attractive
+- **+3 to +5:** Attractive
+- **0 to +2:** Neutral
+- **-3 to -1:** Not attractive
+- **-9 to -4:** Very unattractive
+
+---
+
+## FILE 3: sheet_Driving_Forces_brainstorm.md
+
+### What It Does
+Helps identify and prioritize external forces that will change the market over the next 3 years.
+
+### User Inputs Needed (For Each Driving Force)
+Users brainstorm 10-20+ driving forces, then score each:
+- **Driving Force Name** - Description (e.g., "AI automation", "new regulations")
+- **Impact Score (1-5)** - How much will this change the industry?
+  - 1 = Very low impact
+  - 5 = Very high impact
+- **Probability Score (1-5)** - How likely is this to occur?
+  - 1 = Very low probability
+  - 5 = Very high probability
+
+### Calculation to Implement
+
+**Weighted Score Formula:**
+```
+Score = (2 × Impact) + Probability
+```
+
+**Why Double the Impact?**
+- Impact matters more than probability
+- A low-probability but high-impact event still requires strategic preparation
+- High-impact forces should dominate strategic thinking
+
+**Score Range:**
+- Maximum: 15 (Impact=5, Probability=5 → 2×5+5=15)
+- Minimum: 3 (Impact=1, Probability=1 → 2×1+1=3)
+
+### Ranking Logic
+After calculating scores for all forces:
+1. Rank them from highest to lowest score
+2. Identify the top 3-5 forces
+3. These become the focus for strategic planning
+
+### Example
+| Driving Force | Impact | Probability | Score | Rank |
+|---------------|--------|-------------|-------|------|
+| AI automation | 5 | 4 | 14 | 1 |
+| New regulation | 4 | 5 | 13 | 2 |
+| Economic recession | 3 | 4 | 10 | 3 |
+| Competitor entry | 3 | 3 | 9 | 4 |
+
+Focus strategy on top 3: AI automation, new regulation, economic recession.
+
+---
+
+## FILE 4: sheet_Driving_Forces_impact.md
+
+### What It Does
+Forecasts the market size and profit pool 3 years from now based on the impact of top driving forces.
+
+### Data Flow
+This file needs:
+- **Top ranked driving forces** from File 3 (typically top 5-7)
+- **Current market size** from File 1
+- **Current gross margin** from File 1
+
+### User Inputs Needed (For Each Top Driving Force)
+Estimate the percentage impact on 4 variables:
+- **% Change in Total Customers** (e.g., +0.05 = +5% growth, -0.10 = -10% decline)
+- **% Change in Average Spending**
+- **% Change in Purchases per Year**
+- **% Change in Gross Margin** (in percentage points, not decimal)
+
+### Calculations to Implement
+
+**Future Year Reference:**
+```
+Future Year = Current Year + 3
+```
+
+**Future Customer Count:**
+```
+Future Customers = Current Customers × (1 + Sum of all customer % changes)
+```
+
+**Future Market Size:**
+```
+Future Market Size = Current Market Size × (1 + ΣCustomer%) × (1 + ΣSpending%) × (1 + ΣPurchases%)
+```
+
+**Why Multiply?**
+Growth factors compound! If customers grow 10% AND spending grows 10%, market grows 21% (1.10 × 1.10 = 1.21), not 20%.
+
+**Future Profit Pool:**
+```
+Future Profit Pool = Future Market Size × Current Gross Margin × (1 + ΣMargin%)
+```
+
+### Example Scenario
+
+**Current State (from File 1):**
+- Market Size: $350M
+- Gross Margin: 15% (0.15)
+
+**Top 3 Driving Forces Impact:**
+
+| Force | Customers | Spending | Purchases | Margin |
+|-------|-----------|----------|-----------|--------|
+| AI automation | +5% | 0% | 0% | +1 pt |
+| New regulation | -3% | +10% | 0% | -0.5 pt |
+| Market consolidation | +10% | 0% | 0% | 0% |
+
+**Calculations:**
+```
+Sum of customer changes: +5% - 3% + 10% = +12%
+Sum of spending changes: 0% + 10% + 0% = +10%
+Sum of purchase changes: 0% + 0% + 0% = 0%
+Sum of margin changes: +1 pt - 0.5 pt + 0 pt = +0.5 pt
+
+Future Market Size = $350M × 1.12 × 1.10 × 1.0 = $431.2M
+Future Margin = 15% + 0.5% = 15.5% (0.155)
+Future Profit Pool = $431.2M × 0.155 = $66.8M
+```
+
+**Strategic Insight:**
+- Market growing 23% over 3 years
+- Profit growing 28% (from $52.5M to $66.8M)
+- Margin improvement despite competition
+
+---
+
+## Implementation Guide for Cursor
+
+### Phase 1: Understand the Input Structure
+When you receive the 4 markdown files:
+1. Parse each file to understand the data structure
+2. Identify input fields (look for patterns like "Total Number of Customers", "Impact (1-5)")
+3. Identify formula cells (look for [FORMULA: ...] markers)
+
+### Phase 2: Create Data Models
+Define data structures for:
+```typescript
+// File 1 inputs
+interface MarketSizeInputs {
+  totalCustomers: number;
+  avgSpending: number;
+  purchasesPerYear: number;
+  grossMargin: number; // as decimal
+}
+
+// File 3 inputs
+interface DrivingForce {
+  name: string;
+  impact: number; // 1-5
+  probability: number; // 1-5
+  score?: number; // calculated
+  rank?: number; // calculated
+}
+
+// File 4 inputs
+interface ForceImpact {
+  forceName: string;
+  customerChange: number; // as decimal
+  spendingChange: number;
+  purchaseChange: number;
+  marginChange: number;
+}
+```
+
+### Phase 3: Implement Calculation Functions
+Create functions for:
+1. `calculateMarketSize(inputs: MarketSizeInputs)`
+2. `calculateProfitPool(marketSize: number, margin: number)`
+3. `scoreDrivingForce(impact: number, probability: number)`
+4. `rankDrivingForces(forces: DrivingForce[])`
+5. `forecastMarket(currentMarket: number, impacts: ForceImpact[])`
+6. `calculateCountryAttractiveness(country: CountryData, baseline: BaselineData)`
+
+### Phase 4: Build User Interface
+Suggested flow:
+1. **Screen 1:** Collect File 1 inputs → Show current market size & profit
+2. **Screen 2 (Optional):** Collect country data → Show attractiveness scores
+3. **Screen 3:** Brainstorm driving forces → Show ranked list
+4. **Screen 4:** Estimate impacts of top 5 forces → Show 3-year forecast
+
+### Phase 5: Output Generation
+Generate clear outputs:
+- Current market size and profit pool
+- [If applicable] Country rankings with scores
+- Top 5 driving forces with scores
+- 3-year forecast with growth percentages
+- Strategic recommendations based on the data
+
+---
+
+## Key Formulas Reference
+
+| Calculation | Formula |
+|-------------|---------|
+| Market Size | Customers × Spending × Purchases/Year |
+| Profit Pool | Market Size × Gross Margin |
+| Driving Force Score | (2 × Impact) + Probability |
+| Future Market Size | Current × (1+ΣCust%) × (1+ΣSpend%) × (1+ΣPurch%) |
+| Future Profit Pool | Future Market × Margin × (1+ΣMargin%) |
+| Country Score | Market Index + Profit Index + Attractiveness |
+
+---
+
+## Common Pitfalls to Avoid
+
+1. **Don't confuse margin formats**
+   - Input: User enters 15 (meaning 15%)
+   - Storage: Store as 0.15 (decimal)
+   - Display: Show as 15%
+
+2. **Don't add percentages directly**
+   - Wrong: +10% and +10% = +20%
+   - Right: 1.10 × 1.10 = 1.21 = +21%
+
+3. **Don't forget the 2× multiplier**
+   - Driving force score = (2 × Impact) + Probability
+   - Impact is intentionally weighted double
+
+4. **Don't sum country scores**
+   - Each country scored independently
+   - Compare relative scores, not absolute totals
+
+5. **Margin vs Margin Change**
+   - Base margin: 15% (stored as 0.15)
+   - Margin change: +1 percentage point (stored as 0.01)
+   - New margin: 16% (0.15 + 0.01 = 0.16)
+
+---
+
+## Example User Journey
+
+**Scenario:** Software company selling to banks
+
+### Step 1: Current Market
+User inputs:
+- 70 banks
+- €300,000 per bank
+- 1 purchase/year
+- 22% margin
+
+Output:
+- Market Size: €21M
+- Profit Pool: €4.62M
+
+### Step 2: Driving Forces
+User lists:
+1. Cloud migration (Impact: 5, Prob: 5) → Score: 15
+2. Banking regulation (Impact: 4, Prob: 4) → Score: 12
+3. AI automation (Impact: 5, Prob: 2) → Score: 12
+4. Fintech competition (Impact: 4, Prob: 3) → Score: 11
+5. Economic recession (Impact: 3, Prob: 3) → Score: 9
+
+Top 3 forces: Cloud migration, Banking regulation, AI automation
+
+### Step 3: Future Impact
+User estimates:
+- Cloud migration: +10% customers, +20% spending, 0% purchases, -1pt margin
+- Banking regulation: -5% customers, 0% spending, 0% purchases, -1pt margin
+- AI automation: 0% customers, -5% spending, 0% purchases, +2pt margin
+
+Calculations:
+- Customer change: +10% -5% = +5%
+- Spending change: +20% -5% = +15%
+- Purchase change: 0%
+- Margin change: -1pt -1pt +2pt = 0pt
+
+Output:
+- Future Market: €21M × 1.05 × 1.15 × 1.0 = €25.4M
+- Future Profit: €25.4M × 0.22 = €5.59M
+- Growth: +21% market size, +21% profit
+
+---
+
+## Testing Checklist
+
+When implementing, verify:
+- [ ] Market size = product of 3 inputs
+- [ ] Profit pool = market size × margin
+- [ ] Driving force score = (2 × impact) + probability
+- [ ] Forces are ranked correctly (highest score first)
+- [ ] Future market compounds growth factors (multiply, don't add)
+- [ ] Margin changes are in percentage points, not percentages
+- [ ] All percentages display correctly (0.15 shows as 15%)
+- [ ] Country scores range from -9 to +9
+- [ ] Top forces automatically flow to impact analysis
+
+---
+
+## Success Criteria
+
+The tool should:
+1. Calculate market size in under 5 minutes
+2. Require only team knowledge (no external research)
+3. Achieve 60-70% accuracy (not 100%)
+4. Surface the top 3-5 driving forces
+5. Produce a 3-year forecast that informs strategy
+6. Feel fast and collaborative, not slow and analytical
+
+**Remember:** This tool is about strategic clarity, not precision. Speed and insight over perfect accuracy.

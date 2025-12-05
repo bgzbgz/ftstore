@@ -1,0 +1,60 @@
+Teams Guru Cheat Sheet for Sprint: Team Dynamics and Performance
+The Top 5 Rules of an Amazing Guru
+1. Be the Catalyst: Spark meaningful discussions about the 5 Dysfunctions of a Team. Encourage participants to be honest about the current team dynamics and how they can improve.
+2. Master the Material: Have a deep understanding of the 5 Dysfunctions framework and the tools (Individual Assessment, Team Summary, and Improvement Plan). Your expertise will guide the team through this critical analysis.
+3. Facilitate, Don't Dominate: Lead the discussion, but make sure every voice is heard. Encourage quieter members to share their insights, particularly on sensitive issues like trust and conflict.
+4. Stay Focused: Keep the meeting on track by closely following the agenda. Ensure that discussions are productive and aligned with the sprint's goals.
+5. Adapt and Engage: Be flexible and ready to change tactics if the discussion stalls or becomes heated. Use your facilitation skills to keep the energy positive and forward-moving.
+Session Objectives
+The goal is to assess and improve team dynamics by identifying and addressing the key dysfunctions affecting performance. By the end of the session, the team should have a clear understanding of its dysfunctions, a plan to address them, and a renewed commitment to improving collaboration.
+Proposed Meeting Agenda (90 Minutes Total)
+1. Do Better Than Last Time (10 minutes)
+Reflect on the last sprint's outcomes. Ask the team to identify what went well and what didn't. Encourage them to be honest about where the team fell short and how these areas could improve. Use specific examples to ground the discussion and set a tone of continuous improvement. Your role here is to ensure that the reflection is constructive and leads to actionable insights.
+2. Topic Presentation by Guru (20 minutes)
+Present the key concepts of the 5 Dysfunctions of a Team. Start with a brief overview of the model and then dive into each dysfunction-Absence of Trust, Fear of Conflict, Lack of Commitment, Avoidance of Accountability, and Inattention to Results. Use real-world examples that are relevant to your team's experiences. Highlight why each dysfunction is critical and how it might be currently manifesting in the team. Ensure that the presentation is engaging and sets the stage for the discussion.
+3. Discussion on Team Dysfunctions (30 minutes)
+Facilitate an open discussion based on the results from the Individual Assessment and the compiled Team Summary. Start by asking team members to share their perceptions of the team's strengths and weaknesses. Guide the conversation towards identifying which dysfunctions are most pressing. Use probing questions to uncover underlying issues, such as "What prevents us from engaging in open conflict?" or "How can we build more trust within the team?" Your role is to keep the discussion focused and ensure that all members feel safe to speak honestly.
+4. Decision-Making and Planning (20 minutes)
+Lead the team in developing an action plan using the 5 Dysfunctions Improvement Plan. Prioritize the dysfunctions that need immediate attention and brainstorm specific, actionable steps to address them. Assign responsibilities to team members for each action and set clear deadlines. It's crucial to ensure that everyone is committed to the plan and understands their role in its execution. Reinforce the importance of follow-through by linking these actions to the team's overall goals.
+5. Reflection Time (10 minutes)
+Conclude the meeting by reflecting on what was achieved. Summarize the key decisions made and the next steps. Encourage the team to share their thoughts on the process-what worked, what didn't, and what could be improved in future meetings. Use this time to build momentum and ensure that the team leaves the meeting with a clear sense of purpose and commitment. Highlight the progress made and the positive impact these changes can have on team performance.
+Essential Materials and Tools
+* Key Documents: Fast Track Brain Juice, Deep Dive Resources, Individual Assessment Tool, Team Summary Tool, 5 Dysfunctions Improvement Plan.
+* Quick-Reference Guides: Summaries of each tool's purpose and instructions on how to use them effectively.
+Discussion Points and Potential Challenges
+* Key Questions:
+o "Which dysfunction is currently the biggest obstacle to our success?"
+o "How can we ensure that the actions we plan today are implemented effectively?"
+o "What support do we need from each other to overcome these dysfunctions?"
+* Potential Challenges:
+o Disengagement: If you notice participants disengaging, call on them directly to share their thoughts on specific dysfunctions. Frame it positively, such as, "John, how do you see this playing out in our team?"
+o Conflict: If disagreements arise, acknowledge the differing views and steer the conversation toward finding common ground. For example, "It's clear we have different perspectives on this. Let's explore how we can address everyone's concerns."
+Engaging and Managing the Team
+* Use Real-World Examples: When discussing dysfunctions, relate them to real situations the team has experienced. This makes the conversation more relevant and grounded.
+* Facilitate Active Participation: Encourage all team members to contribute by asking direct, open-ended questions. If the discussion veers off-topic, gently redirect it by revisiting the session's objectives.
+* Handling Conflicts: Address conflicts head-on by promoting open dialogue. Encourage team members to express their views while maintaining respect and focus on solutions.
+* Time Management: Keep an eye on the clock to ensure that each section of the meeting gets the time it needs. If discussions are running long, suggest continuing them in a follow-up session.
+FAQ and Pitfalls
+* How do I ensure everyone participates?
+Use open-ended questions and direct prompts to engage quieter team members. For instance, "Sara, how do you think we can improve our trust levels?"
+* What if we can't reach a consensus?
+Propose a compromise that aligns with the sprint's goals or suggest further discussion in the next meeting. If necessary, set aside unresolved issues for later resolution.
+* Common Pitfalls:
+o Derailing into unrelated topics: If the conversation strays, refocus the team by reminding them of the agenda and the time constraints.
+o Unprepared team members: Start the meeting with a brief recap of key materials to ensure everyone is up to speed. Encourage preparation ahead of time in future meetings.
+Preparation and Execution Checklist
+* Before the Meeting:
+o Review all materials and tools thoroughly.
+o Rehearse your presentation, focusing on how to explain each dysfunction clearly and concisely.
+o Prepare specific examples that are relevant to the team's current challenges.
+* During the Meeting:
+o Maintain control of the agenda and keep the discussion focused on outcomes.
+o Engage all participants, especially those who might be more reserved or hesitant to speak.
+o Ensure that decisions are documented clearly and that everyone understands their role in the action plan.
+* After the Meeting:
+o Follow up on the decisions made, ensuring that actions are being taken.
+o Address any unresolved issues or questions promptly.
+o Encourage the team to continue reflecting on their dynamics and to use the tools provided to monitor progress.
+
+This Guru Cheat Sheet now focuses specifically on how to effectively lead the Team Dynamics and Performance Sprint, with expanded advice on handling each agenda topic and ensuring productive, outcome-driven discussions.
+
